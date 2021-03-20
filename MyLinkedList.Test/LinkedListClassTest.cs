@@ -2,17 +2,8 @@ using NUnit.Framework;
 
 namespace MyLinkedList.Test
 {
-    public class Tests
+    public class LinkedListClassTest
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
 
-        [Test]
-        public void Test1()
-        {
-            Assert.Pass();
-        }
     }
 }
