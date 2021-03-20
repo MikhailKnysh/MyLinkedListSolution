@@ -4,14 +4,16 @@ namespace MyLinkedList
 {
     public class LinkedListClass<T>
     {
-        private Node<T> _head;
-        private Node<T> _tail;
+        public Node<T> Head { get; set; }
+        
+        public Node<T> Tail { get; set; }
+
         public int Count { get; set; }
 
         public LinkedListClass()
         {
-            _head = null;
-            _tail = null;
+            Head = null;
+            Tail = null;
             Count = 0;
         }
 
@@ -20,8 +22,8 @@ namespace MyLinkedList
             if(data!= null)
             {
                 Node<T> item = new Node<T>(data);
-                _head = item;
-                _tail = item;
+                Head = item;
+                Tail = item;
                 ++Count;
             }
             else
