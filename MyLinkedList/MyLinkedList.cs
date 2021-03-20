@@ -2,7 +2,7 @@
 
 namespace MyLinkedList
 {
-    public class Class1
+    public class MyLinkedList<T>
     {
     }
 }

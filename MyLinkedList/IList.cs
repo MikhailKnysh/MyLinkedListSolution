@@ -17,6 +17,7 @@ namespace MyOwnList
         T Remove();
         int RemoveByValueFirst(T value);
         int RemoveByValueAll(T value);
+        int FindIndexByValue(T value);
         int GetMaxIndex();
         T GetMax();
         int GetMinIndex();
