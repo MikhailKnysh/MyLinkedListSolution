@@ -10,7 +10,7 @@ namespace MyLinkedList
 
         public Node<T> Tail { get; set; }
 
-        public int Length { get; set; }
+        public int Count { get; set; }
 
         public T this[int index]
         {
@@ -56,7 +56,7 @@ namespace MyLinkedList
 
         public LinkedListClass()
         {
-            Length = 0;
+            Count = 0;
             Head = null;
             Tail = null;
         }
@@ -65,7 +65,7 @@ namespace MyLinkedList
         {
             if (data != null)
             {
-                Length = 1;
+                Count = 1;
                 Head = new Node<T>(data);
                 Tail = Head;
             }
@@ -79,7 +79,7 @@ namespace MyLinkedList
         {
             if (!(data is null))
             {
-                Length = data.Length;
+                Count = data.Length;
 
                 if (data.Length != 0)
                 {
@@ -146,63 +146,55 @@ namespace MyLinkedList
 
         public T RemoveByIndex(int index)
         {
-            throw new NotImplementedException();
-        }
-
-        public T RemoveStart()//move tail if only one node
-        {
-            if (!(Head is null))
+            if (IsValidIndex(index) && !(Head is null))
             {
-                T data = Head.Data;
+                T data = default;
 
-                if (Length == 1)
+                if (index == 0)
                 {
-                    Head = null;
-                    Tail = null;
+                    data = Head.Data;
+                    Head = Head.Next;
                 }
                 else
                 {
-                    Head = Head.Next;
+                    Tail = Head;
+
+                    for (int i = 0; i < index; i++)
+                    {
+                        if (i == index - 1)
+                        {
+                            data = Tail.Next.Data;
+
+                            Tail.Next = Tail.Next?.Next;
+                            break;
+                        }
+
+                        Tail = Tail.Next;
+                    }
                 }
 
-                --Length;
+                --Count;
 
                 return data;
             }
+            else if (Head is null)
+            {
+                throw new NullReferenceException("List is empty!");
+            }
+            else
+            {
+                throw new IndexOutOfRangeException("Invalid index!");
+            }
+        }
 
-            throw new NullReferenceException("List is empty");
+        public T RemoveStart()
+        {
+            return RemoveByIndex(0);
         }
 
         public T Remove()
         {
-            if (!(Tail is null))
-            {
-                T data = Tail.Data;
-
-                if (Length == 1)
-                {
-                    Head = null;
-                    Tail = null;
-                }
-                else
-                {
-                    Node<T> current = Head;
-
-                    while (!(current.Next.Next is null))
-                    {
-                        current = current.Next;
-                    }
-
-                    Tail = current;
-                    Tail.Next = null;
-                }
-
-                --Length;
-
-                return data;
-            }
-
-            throw new NullReferenceException("List is empty!");
+            return RemoveByIndex(Count - 1);
         }
 
         public void RemoveRangeByIndex(int index)
@@ -272,7 +264,7 @@ namespace MyLinkedList
 
         private bool IsValidIndex(int index)
         {
-            return index >= 0 && index < Length;
+            return index >= 0 && index < Count;
         }
 
         public IEnumerator<T> GetEnumerator()

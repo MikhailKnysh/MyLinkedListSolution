@@ -20,7 +20,7 @@
         public abstract void GetMin_WhenInputIsValued_ShouldFindMaxElement(int expectedMin, int[] inputArray);
         public abstract void HalfReverse_WhenValidListPassed_ShouldReverseListByHalves(int[] inputArray, int[] expectedArray);
         public abstract void HalfReverse_WhenValidListPassed_ShouldReverseListByHalves(int[] inputArray);
-        public abstract void RemoveByIndex_WhenIndexOutOfRange_ShouldThrowArgumentOutOfRangeException(int index, int[] inputArray);
+        public abstract void RemoveByIndex_WhenIndexOutOfRange_ShouldThrowIndexOutOfRangeException(int index, int[] inputArray);
         public abstract void RemoveByIndex_WhenIndexOutOfRange_ShouldThrowIndexOutOfRangeException(int index, int quantity, int[] inputArray);
         public abstract void RemoveByIndex_WhenIndexOutOfRange_ShouldThrowInvalidOperationException(int index, int quantity, int[] inputArray);
         public abstract void RemoveByIndex_WhenIndexOutOfRange_ShouldThrowInvalidOperationException(int quantity, int[] inputArray);
