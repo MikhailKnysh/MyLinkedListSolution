@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 
 
-namespace MyOwnList
+namespace MyLinkedList
 {
-     public interface IList<T>
+     public interface IList<T> where T : IComparable
     {
         void Clear();
         string ToString();
@@ -12,9 +12,15 @@ namespace MyOwnList
         void AddStart(T value);
         void Add(T value);
         void AddByIndex(int index, T value);
+        void AddRangeStart(T[] collection);
+        void AddRange(T[] collection);
+        void AddRangeByIndex(int index, T[] collection);
         T RemoveByIndex(int index);
         T RemoveStart();
         T Remove();
+        void RemoveRangeByIndex(int index);
+        void RemoveRangeStart();
+        void RemoveRange();
         int RemoveByValueFirst(T value);
         int RemoveByValueAll(T value);
         int FindIndexByValue(T value);
@@ -22,10 +28,7 @@ namespace MyOwnList
         T GetMax();
         int GetMinIndex();
         T GetMin();
-        void Set(int index, T value);
-        T Get(int value);
-        void SortAscending();
-        void SortDescending();
+        void Sort( bool isAscending);
         void Reverse();
         void HalfReverse();
     }
