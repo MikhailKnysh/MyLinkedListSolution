@@ -4,7 +4,19 @@ namespace MyLinkedList.Test
 {
     public class LinkedListClassTest : MyListBase
     {
-        
+        [TestCase( 10, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 },
+            new int[] {10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
+        public  void AddStart_WhenInputValue_ShouldAddItToCollection(
+           int valueToInsert, int[] inputArray, int[] expectedArray)
+        {
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            actualList.AddStart(valueToInsert);
+
+            CollectionAssert.AreEqual(expectedList, actualList);
+        }
+
         public override void AddByIndex_WhenInpuIsNotValid_ShouldThrowIndexOutOfRangeException(int index, int value, int[] result)
         {
             throw new System.NotImplementedException();
@@ -12,14 +24,16 @@ namespace MyLinkedList.Test
 
         [TestCase(3, 10, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 
             new int[] { 1, 2, 3, 10, 4, 5, 6, 7, 8, 9, 10 })]
-        [TestCase(0, 10, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 
-            new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
+        [TestCase(0, 10, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 },
+            new int[] { 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
         public override void AddByIndex_WhenInputIsValid_ShouldAddItToCollection(int index, int valueToInsert, int[] inputArray, int[] expectedArray)
         {
             LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
             LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
 
             actualList.AddByIndex(index, valueToInsert);
+
+            CollectionAssert.AreEqual(expectedList, actualList);
         }
 
         public override void AddRangeByIndex_WhenInpuISValued_ShouldThrowArgumentException(int index, int[] insertCollection, int[] inputArray)

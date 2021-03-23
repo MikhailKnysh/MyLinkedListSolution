@@ -116,7 +116,7 @@ namespace MyLinkedList
 
         public void AddStart(T value)
         {
-            throw new NotImplementedException();
+            AddByIndex(index: 0, value);
         }
 
         public void Add(T value)
@@ -146,7 +146,7 @@ namespace MyLinkedList
                 Node<T> item = new Node<T>(value);
                 if (index == 0)
                 {
-                    Head.Next = Head;
+                    item.Next = Head;
                     Head = item;
                 }
                 else
@@ -156,10 +156,12 @@ namespace MyLinkedList
                     for (int i = 1; i < index; i++)
                     {
                         Tail = Tail.Next;
+                        if(i == index - 1)
+                        {
+                            item.Next = Tail.Next;
+                            Tail.Next = item;
+                        }
                     }
-
-                    item.Next = Tail;
-                    Tail = item;
                 }
 
                 ++Length;
