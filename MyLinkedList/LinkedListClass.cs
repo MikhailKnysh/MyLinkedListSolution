@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace MyLinkedList
 {
@@ -224,7 +225,23 @@ namespace MyLinkedList
 
         public override string ToString()
         {
-            return base.ToString();
+            if (Length != 0)
+            {
+                Node<T> current = Head;
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while (!(current.Next is null))
+                {
+                    stringBuilder.Append($"{current.Data} ");
+                    current = current.Next;
+                }
+
+                return stringBuilder.ToString().Trim();
+            }
+            else
+            {
+                return String.Empty;
+            }
         }
 
         private bool IsValidIndex(int index)
