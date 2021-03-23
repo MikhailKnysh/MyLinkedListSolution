@@ -222,6 +222,11 @@ namespace MyLinkedList
             throw new NotImplementedException();
         }
 
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+
         private bool IsValidIndex(int index)
         {
             return index >= 0 && index < Length;
