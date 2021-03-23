@@ -228,19 +228,19 @@ namespace MyLinkedList
             if (Length != 0)
             {
                 Node<T> current = Head;
-                StringBuilder stringBuilder = new StringBuilder();
+                StringBuilder stringBuilder = new StringBuilder($"{current.Data} ");
 
                 while (!(current.Next is null))
                 {
-                    stringBuilder.Append($"{current.Data} ");
                     current = current.Next;
+                    stringBuilder.Append($"{current.Data} ");
                 }
 
                 return stringBuilder.ToString().Trim();
             }
             else
             {
-                return String.Empty;
+                return string.Empty;
             }
         }
 
