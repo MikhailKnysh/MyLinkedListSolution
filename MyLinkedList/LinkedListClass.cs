@@ -6,9 +6,9 @@ namespace MyLinkedList
 {
     public class LinkedListClass<T> : IList<T>, IEnumerable<T> where T : IComparable
     {
-        public Node<T> Head { get; set; }
+        private Node<T> _head;
 
-        public Node<T> Tail { get; set; }
+        private Node<T> _tail;
 
         public int Length { get; set; }
 
@@ -18,7 +18,7 @@ namespace MyLinkedList
             {
                 if (IsValidIndex(index))
                 {
-                    Node<T> current = Head;
+                    Node<T> current = _head;
 
                     for (int i = 1; i <= index; i++)
                     {
@@ -34,7 +34,7 @@ namespace MyLinkedList
             {
                 if (IsValidIndex(index) && !(value is null))
                 {
-                    Node<T> current = Head;
+                    Node<T> current = _head;
 
                     for (int i = 1; i <= index; i++)
                     {
@@ -57,8 +57,8 @@ namespace MyLinkedList
         public LinkedListClass()
         {
             Length = 0;
-            Head = null;
-            Tail = null;
+            _head = null;
+            _tail = null;
         }
 
         public LinkedListClass(T data)
@@ -66,8 +66,8 @@ namespace MyLinkedList
             if (data != null)
             {
                 Length = 1;
-                Head = new Node<T>(data);
-                Tail = Head;
+                _head = new Node<T>(data);
+                _tail = _head;
             }
             else
             {
@@ -83,19 +83,19 @@ namespace MyLinkedList
 
                 if (data.Length != 0)
                 {
-                    Head = new Node<T>(data[0]);
-                    Tail = Head;
+                    _head = new Node<T>(data[0]);
+                    _tail = _head;
 
                     for (int i = 1; i < data.Length; i++)
                     {
-                        Tail.Next = new Node<T>(data[i]);
-                        Tail = Tail.Next;
+                        _tail.Next = new Node<T>(data[i]);
+                        _tail = _tail.Next;
                     }
                 }
                 else
                 {
-                    Head = null;
-                    Tail = null;
+                    _head = null;
+                    _tail = null;
                 }
             }
             else
@@ -106,7 +106,9 @@ namespace MyLinkedList
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            Length = 0;
+            _head = null;
+            _tail = null;
         }
 
         public T[] ToArray()
@@ -123,15 +125,15 @@ namespace MyLinkedList
         {
             if (value != null)
             {
-                if (Head == null)
+                if (_head == null)
                 {
-                    Head = new Node<T>(value);
-                    Tail = Head;
+                    _head = new Node<T>(value);
+                    _tail = _head;
                 }
                 else
                 {
-                    Tail.Next = new Node<T>(value);
-                    Tail = Tail.Next;
+                    _tail.Next = new Node<T>(value);
+                    _tail = _tail.Next;
                 }
 
 
@@ -146,20 +148,20 @@ namespace MyLinkedList
                 Node<T> item = new Node<T>(value);
                 if (index == 0)
                 {
-                    item.Next = Head;
-                    Head = item;
+                    item.Next = _head;
+                    _head = item;
                 }
                 else
                 {
-                    Tail = Head;
+                    _tail = _head;
 
                     for (int i = 1; i < index; i++)
                     {
-                        Tail = Tail.Next;
+                        _tail = _tail.Next;
                         if(i == index - 1)
                         {
-                            item.Next = Tail.Next;
-                            Tail.Next = item;
+                            item.Next = _tail.Next;
+                            _tail.Next = item;
                         }
                     }
                 }
@@ -271,7 +273,7 @@ namespace MyLinkedList
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new LinkedListEnumerator<T>(Head);
+            return new LinkedListEnumerator<T>(_head);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
