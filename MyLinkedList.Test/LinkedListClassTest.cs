@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 
 namespace MyLinkedList.Test
 {
@@ -140,14 +141,27 @@ namespace MyLinkedList.Test
             throw new System.NotImplementedException();
         }
 
+        [Test]
         public override void RemoveStart_WhenIndexOutOfRange_ShouldThrowArgumentOutOfRangeException()
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> inputList = new LinkedListClass<int>() { };
+
+            Assert.Throws<InvalidOperationException>(() => inputList.Remove());
         }
 
-        public override void RemoveStart_WhenValidIndexPassed_ShouldDeleteFirstElement(int expectedValueToRemove, int[] inputArray, int[] expectedArray)
+        [TestCase(-2, new int[] { -2, 34, 5, 6, 57, 68, 65, -17 }, new int[] { 34, 5, 6, 57, 68, 65, -17 })]
+        [TestCase(34, new int[] { 34, 96 }, new int[] { 96 })]
+        [TestCase(-117, new int[] { -117 }, new int[] { })]
+        public override void RemoveStart_WhenValidIndexPassed_ShouldDeleteFirstElement(
+            int expectedValueToRemove, int[] inputArray, int[] expectedArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+
+            int actualValueToRemove = actualList.RemoveStart();
+
+            Assert.AreEqual(expectedValueToRemove, actualValueToRemove);
+            CollectionAssert.AreEqual(expectedList, actualList);
         }
 
         public override void Remove_WhenIndexOutOfRange_ShouldThrowArgumentOutOfRangeException()

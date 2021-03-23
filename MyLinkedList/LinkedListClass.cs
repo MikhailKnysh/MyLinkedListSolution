@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace MyLinkedList
 {
-    public class LinkedListClass<T> : IList<T> where T : IComparable
+    public class LinkedListClass<T> : IList<T>, IEnumerable<T> where T : IComparable
     {
         public Node<T> Head { get; set; }
 
@@ -225,6 +227,16 @@ namespace MyLinkedList
         private bool IsValidIndex(int index)
         {
             return index >= 0 && index < Length;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
     }
 }
