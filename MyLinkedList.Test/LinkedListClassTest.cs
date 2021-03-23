@@ -5,7 +5,6 @@ namespace MyLinkedList.Test
 {
     public class LinkedListClassTest : MyListBase
     {
-        [Test]
         public override void AddByIndex_WhenInpuIsNotValid_ShouldThrowIndexOutOfRangeException(int index, int value, int[] result)
         {
             throw new System.NotImplementedException();
@@ -142,17 +141,17 @@ namespace MyLinkedList.Test
         }
 
         [Test]
-        public override void RemoveStart_WhenIndexOutOfRange_ShouldThrowArgumentOutOfRangeException()
+        public override void RemoveStart_WhenListIsEmpty_ShouldThrowNullReferenceException()
         {
             LinkedListClass<int> inputList = new LinkedListClass<int>() { };
 
-            Assert.Throws<InvalidOperationException>(() => inputList.Remove());
+            Assert.Throws<NullReferenceException>(() => inputList.RemoveStart());
         }
 
         [TestCase(-2, new int[] { -2, 34, 5, 6, 57, 68, 65, -17 }, new int[] { 34, 5, 6, 57, 68, 65, -17 })]
         [TestCase(34, new int[] { 34, 96 }, new int[] { 96 })]
         [TestCase(-117, new int[] { -117 }, new int[] { })]
-        public override void RemoveStart_WhenValidIndexPassed_ShouldDeleteFirstElement(
+        public override void RemoveStart_WhenListIsValid_ShouldDeleteFirstElement(
             int expectedValueToRemove, int[] inputArray, int[] expectedArray)
         {
             LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);

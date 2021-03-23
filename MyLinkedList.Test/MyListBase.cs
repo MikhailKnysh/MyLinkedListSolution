@@ -29,8 +29,8 @@
         public abstract void RemoveByValueFirst_WhenValidIndexPassed_ShouldRemoveFirstValue(int valueToRemove, int expectedIndex, int[] inputArray, int[] expectedArray);
         public abstract void RemoveRangeByIndex_WhenValidIndexPassed_ShouldRemoveRangeByIndex(int index, int quantity, int[] inputArray, int[] expectedArray);
         public abstract void RemoveRangeStart_WhenValidIndexPassed_ShouldRemoveRangeStart(int quantity, int[] inputArray, int[] expectedArray);
-        public abstract void RemoveStart_WhenIndexOutOfRange_ShouldThrowArgumentOutOfRangeException();
-        public abstract void RemoveStart_WhenValidIndexPassed_ShouldDeleteFirstElement(int expectedValueToRemove, int[] inputArray, int[] expectedArray);
+        public abstract void RemoveStart_WhenListIsEmpty_ShouldThrowNullReferenceException();
+        public abstract void RemoveStart_WhenListIsValid_ShouldDeleteFirstElement(int expectedValueToRemove, int[] inputArray, int[] expectedArray);
         public abstract void Remove_WhenIndexOutOfRange_ShouldThrowArgumentOutOfRangeException();
         public abstract void Remove_WhenValidIndexPassed_ShouldDeleteLastElement(int expectedValueToRemove, int[] inputArray, int[] expectedArray);
         public abstract void Reverse_WhenValidListPassed_ShouldReverseList(int[] inputArray, int[] expectedArray);

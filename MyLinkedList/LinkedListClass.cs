@@ -151,7 +151,16 @@ namespace MyLinkedList
 
         public T RemoveStart()
         {
-            throw new NotImplementedException();
+            if (!(Head is null))
+            {
+                T data = Head.Data;
+
+                Head = Head.Next;
+
+                return data;
+            }
+
+            throw new NullReferenceException("List is empty");
         }
 
         public T Remove()
@@ -231,12 +240,12 @@ namespace MyLinkedList
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return new LinkedListEnumerator<T>(Head);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
     }
 }
