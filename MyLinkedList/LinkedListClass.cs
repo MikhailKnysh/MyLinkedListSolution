@@ -149,13 +149,23 @@ namespace MyLinkedList
             throw new NotImplementedException();
         }
 
-        public T RemoveStart()
+        public T RemoveStart()//move tail if only one node
         {
             if (!(Head is null))
             {
                 T data = Head.Data;
 
-                Head = Head.Next;
+                if (Length == 1)
+                {
+                    Head = null;
+                    Tail = null;
+                }
+                else
+                {
+                    Head = Head.Next;
+                }
+
+                --Length;
 
                 return data;
             }
@@ -165,7 +175,34 @@ namespace MyLinkedList
 
         public T Remove()
         {
-            throw new NotImplementedException();
+            if (!(Tail is null))
+            {
+                T data = Tail.Data;
+
+                if (Length == 1)
+                {
+                    Head = null;
+                    Tail = null;
+                }
+                else
+                {
+                    Node<T> current = Head;
+
+                    while (!(current.Next.Next is null))
+                    {
+                        current = current.Next;
+                    }
+
+                    Tail = current;
+                    Tail.Next = null;
+                }
+
+                --Length;
+
+                return data;
+            }
+
+            throw new NullReferenceException("List is empty!");
         }
 
         public void RemoveRangeByIndex(int index)

@@ -163,14 +163,27 @@ namespace MyLinkedList.Test
             CollectionAssert.AreEqual(expectedList, actualList);
         }
 
-        public override void Remove_WhenIndexOutOfRange_ShouldThrowArgumentOutOfRangeException()
+        [Test]
+        public override void Remove_WhenListIsEmpty_ShouldThrowNullReferenceException()
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>();
+
+            Assert.Throws<NullReferenceException>(() => actualList.Remove());
         }
 
-        public override void Remove_WhenValidIndexPassed_ShouldDeleteLastElement(int expectedValueToRemove, int[] inputArray, int[] expectedArray)
+        [TestCase(-17, new int[] { 2, 34, 5, 6, 57, 68, 65, -17 }, new int[] { 2, 34, 5, 6, 57, 68, 65 })]
+        [TestCase(34, new int[] { 2, 34 }, new int[] { 2 })]
+        [TestCase(2, new int[] { 2 }, new int[] { })]
+        public override void Remove_WhenListIsValid_ShouldDeleteLastElement(
+            int expectedValueToRemove, int[] inputArray, int[] expectedArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+
+            int actualValueToRemove = actualList.Remove();
+
+            Assert.AreEqual(expectedValueToRemove, actualValueToRemove);
+            CollectionAssert.AreEqual(expectedList, actualList);
         }
 
         public override void Reverse_WhenValidListPassed_ShouldReverseList(int[] inputArray, int[] expectedArray)
