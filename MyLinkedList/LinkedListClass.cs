@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace MyLinkedList
 {
-    public class LinkedListClass<T> : IList<T> where T : IComparable
+    public class LinkedListClass<T> : IList<T>, IEnumerable<T> where T : IComparable
     {
         public Node<T> Head { get; set; }
 
@@ -119,12 +121,50 @@ namespace MyLinkedList
 
         public void Add(T value)
         {
-            throw new NotImplementedException();
+            if (value != null)
+            {
+                if (Head == null)
+                {
+                    Head = new Node<T>(value);
+                    Tail = Head;
+                }
+                else
+                {
+                    Tail.Next = new Node<T>(value);
+                    Tail = Tail.Next;
+                }
+
+
+                ++Length;
+            }
         }
 
         public void AddByIndex(int index, T value)
         {
-            throw new NotImplementedException();
+            if (value != null)
+            {
+                Node<T> item = new Node<T>(value);
+                if (index == 0)
+                {
+                    Head.Next = Head;
+                    Head = item;
+                }
+                else
+                {
+                    Tail = Head;
+
+                    for (int i = 1; i < index; i++)
+                    {
+                        Tail = Tail.Next;
+                    }
+
+                    item.Next = Tail;
+                    Tail = item;
+                }
+
+                ++Length;
+            }
+
         }
 
         public void AddRangeStart(T[] collection)
@@ -226,5 +266,40 @@ namespace MyLinkedList
         {
             return index >= 0 && index < Length;
         }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new LinkedListEnumerator<T>(Head);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        //public override bool Equals(object obj)
+        //{
+        //    LinkedListClass<T> list = (LinkedListClass<T>)obj;
+
+        //    if (this.Length != list.Length)
+        //    {
+        //        return false;
+        //    }
+
+        //    Node<T> currentThis = this.Head;
+        //    Node<T> currentList = list.Head;
+
+        //    do
+        //    {
+        //        if (!currentThis.Data.Equals(currentList.Data))
+        //        {
+        //            return false;
+        //        }
+        //        currentList = currentList.Next;
+        //        currentThis = currentThis.Next;
+        //    }
+        //    while (!(currentThis.Next is null));
+
+        //    return true;
+        //}
     }
 }

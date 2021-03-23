@@ -4,15 +4,22 @@ namespace MyLinkedList.Test
 {
     public class LinkedListClassTest : MyListBase
     {
-        [Test]
+        
         public override void AddByIndex_WhenInpuIsNotValid_ShouldThrowIndexOutOfRangeException(int index, int value, int[] result)
         {
             throw new System.NotImplementedException();
         }
 
+        [TestCase(3, 10, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 
+            new int[] { 1, 2, 3, 10, 4, 5, 6, 7, 8, 9, 10 })]
+        [TestCase(0, 10, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 
+            new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
         public override void AddByIndex_WhenInputIsValid_ShouldAddItToCollection(int index, int valueToInsert, int[] inputArray, int[] expectedArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            actualList.AddByIndex(index, valueToInsert);
         }
 
         public override void AddRangeByIndex_WhenInpuISValued_ShouldThrowArgumentException(int index, int[] insertCollection, int[] inputArray)
@@ -35,9 +42,17 @@ namespace MyLinkedList.Test
             throw new System.NotImplementedException();
         }
 
+
+        [TestCase(10, new int[] { 1, 2, 3, 4, 5, 6 }, new int[] { 1, 2, 3, 4, 5, 6, 10 })]
+        [TestCase(10, new int[] { }, new int[] { 10 })]
         public override void Add_WhenInputIsValid_ShouldAddItToCollection(int valueToInsert, int[] inputArray, int[] expectedArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            actualList.Add(valueToInsert);
+
+            CollectionAssert.AreEqual(expectedList, actualList);
         }
 
         public override void FindIndexByValue_WhenValidIndexPassed_ShouldReturnIndex(int valueToInsert, int expectedIndex, int[] inputArray)
