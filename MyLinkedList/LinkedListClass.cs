@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -106,7 +107,9 @@ namespace MyLinkedList
 
         public void Clear()
         {
-            throw new NotImplementedException();
+             Count = 0;
+            _head = null;
+            _tail = null;
         }
 
         public T[] ToArray()
@@ -126,7 +129,7 @@ namespace MyLinkedList
 
         public void AddByIndex(int index, T data)
         {
-            if (data != null && index>=0 && index<=Count)
+            if (data != null && index >= 0 && index <= Count)
             {
                 Node<T> item = new Node<T>(data);
                 if (index == 0)
@@ -140,10 +143,11 @@ namespace MyLinkedList
 
                     for (int i = 1; i <= index; i++)
                     {
-                        if(i == index )
+                        if (i == index)
                         {
                             item.Next = current.Next;
                             current.Next = item;
+                            
                             if (current.Next == null)
                             {
                                 _tail = current.Next;
@@ -163,32 +167,143 @@ namespace MyLinkedList
 
         public void AddRangeStart(T[] collection)
         {
-            throw new NotImplementedException();
+            AddRangeByIndex(index: 0, collection);
         }
 
         public void AddRange(T[] collection)
         {
-            throw new NotImplementedException();
+            AddRangeByIndex(index: Count, collection);
         }
 
         public void AddRangeByIndex(int index, T[] collection)
         {
-            throw new NotImplementedException();
+            
+            if (index>=0 && index<=Count && !(collection is null) )
+            {
+                var temp = default(Node<T>);
+                Node<T> current = _head;
+
+                if (index == 0)
+                {
+                    temp = _head;
+                    _head = new Node<T>(collection[0]);
+                    current = _head;
+
+                    for (int i = 1; i < collection.Length; i++)
+                    {
+                        current.Next = new Node<T>(collection[i]);
+                        current = current.Next;
+                    }
+
+                    current.Next = temp;
+
+                    if (current.Next == null)
+                    {
+                        _tail = current;
+                    }
+                }
+                else
+                {
+                    int j = 0;
+                    int lenth = index + collection.Length;
+
+                    for (int i = 1; i < lenth; i++)
+                    {
+                        if (i >= index)
+                        {
+                            if (i == index)
+                            {
+                                 temp = current.Next;
+                            }
+                            current.Next = current.Next = new Node<T>(collection[j++]);
+                        }
+                        current = current.Next;
+                    }
+                    current.Next = temp;
+                }
+                Count += collection.Length;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         public T RemoveByIndex(int index)
         {
-            throw new NotImplementedException();
+            if (IsValidIndex(index) && !(_head is null))
+            {
+                T data = default;
+
+                if (index == 0)
+                {
+                    RemoveStart();
+                }
+                else
+                {
+                    Node<T> current = _head;
+
+                    for (int i = 0; i < index; i++)
+                    {
+                        if (i == index - 1)
+                        {
+                            data = current.Next.Data;
+
+                            current.Next = current.Next?.Next;
+
+                            if (index == Count - 1)
+                            {
+                                _tail = current.Next;
+                            }
+
+                            break;
+                        }
+
+                        current = current.Next;
+                    }
+
+                    --Count;
+                }
+
+                return data;
+            }
+            else if (_head is null)
+            {
+                throw new NullReferenceException("List is empty!");
+            }
+            else
+            {
+                throw new IndexOutOfRangeException("Invalid index!");
+            }
         }
 
         public T RemoveStart()
         {
-            throw new NotImplementedException();
+            if (!(_head is null))
+            {
+                T data = _head.Data;
+
+                if (Count == 1)
+                {
+                    _head = null;
+                    _tail = null;
+                }
+                else
+                {
+                    _head = _head.Next;
+                }
+
+                --Count;
+
+                return data;
+            }
+
+            throw new NullReferenceException("List is empty!");
         }
 
         public T Remove()
         {
-            throw new NotImplementedException();
+            return RemoveByIndex(Count - 1);
         }
 
         public void RemoveRangeByIndex(int index)
@@ -254,6 +369,27 @@ namespace MyLinkedList
         public void HalfReverse()
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            if (Length != 0)
+            {
+                Node<T> current = Head;
+                StringBuilder stringBuilder = new StringBuilder($"{current.Data} ");
+
+                while (!(current.Next is null))
+                {
+                    current = current.Next;
+                    stringBuilder.Append($"{current.Data} ");
+                }
+
+                return stringBuilder.ToString().Trim();
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         private bool IsValidIndex(int index)
