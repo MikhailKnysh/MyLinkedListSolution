@@ -237,7 +237,7 @@ namespace MyLinkedList
 
                 if (index == 0)
                 {
-                    RemoveStart();
+                   data = RemoveStart();
                 }
                 else
                 {
@@ -373,9 +373,9 @@ namespace MyLinkedList
 
         public override string ToString()
         {
-            if (Length != 0)
+            if (Count != 0)
             {
-                Node<T> current = Head;
+                Node<T> current = _head;
                 StringBuilder stringBuilder = new StringBuilder($"{current.Data} ");
 
                 while (!(current.Next is null))
