@@ -192,22 +192,24 @@ namespace MyLinkedList
                         current.Next = new Node<T>(collection[i]);
                         current = current.Next;
                     }
+
                     current.Next = temp;
+
                     if (current.Next == null)
                     {
-                        _tail = current.Next;
+                        _tail = current;
                     }
                 }
-              
                 else
                 {
                     int j = 0;
                     int lenth = index + collection.Length;
+
                     for (int i = 1; i < lenth; i++)
                     {
-                        if (i >= (index ))
+                        if (i >= index)
                         {
-                            if (i == index )
+                            if (i == index)
                             {
                                  temp = current.Next;
                             }
