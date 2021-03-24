@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace MyLinkedList
 {
-    public class LinkedListClass<T> : IList<T> where T : IComparable
+    public class LinkedListClass<T> : IList<T>, IEnumerable<T> where T : IComparable
     {
-        public Node<T> Head { get; set; }
+        private Node<T> _head;
 
-        public Node<T> Tail { get; set; }
+        private Node<T> _tail;
 
-        public int Length { get; set; }
+        public int Count { get; set; }
 
         public T this[int index]
         {
@@ -16,7 +18,7 @@ namespace MyLinkedList
             {
                 if (IsValidIndex(index))
                 {
-                    Node<T> current = Head;
+                    Node<T> current = _head;
 
                     for (int i = 1; i <= index; i++)
                     {
@@ -32,7 +34,7 @@ namespace MyLinkedList
             {
                 if (IsValidIndex(index) && !(value is null))
                 {
-                    Node<T> current = Head;
+                    Node<T> current = _head;
 
                     for (int i = 1; i <= index; i++)
                     {
@@ -54,18 +56,18 @@ namespace MyLinkedList
 
         public LinkedListClass()
         {
-            Length = 0;
-            Head = null;
-            Tail = null;
+            Count = 0;
+            _head = null;
+            _tail = null;
         }
 
         public LinkedListClass(T data)
         {
             if (data != null)
             {
-                Length = 1;
-                Head = new Node<T>(data);
-                Tail = Head;
+                Count = 1;
+                _head = new Node<T>(data);
+                _tail = _head;
             }
             else
             {
@@ -77,23 +79,23 @@ namespace MyLinkedList
         {
             if (!(data is null))
             {
-                Length = data.Length;
+                Count = data.Length;
 
                 if (data.Length != 0)
                 {
-                    Head = new Node<T>(data[0]);
-                    Tail = Head;
+                    _head = new Node<T>(data[0]);
+                    _tail = _head;
 
                     for (int i = 1; i < data.Length; i++)
                     {
-                        Tail.Next = new Node<T>(data[i]);
-                        Tail = Tail.Next;
+                        _tail.Next = new Node<T>(data[i]);
+                        _tail = _tail.Next;
                     }
                 }
                 else
                 {
-                    Head = null;
-                    Tail = null;
+                    _head = null;
+                    _tail = null;
                 }
             }
             else
@@ -144,17 +146,79 @@ namespace MyLinkedList
 
         public T RemoveByIndex(int index)
         {
-            throw new NotImplementedException();
+            if (IsValidIndex(index) && !(_head is null))
+            {
+                T data = default;
+
+                if (index == 0)
+                {
+                    RemoveStart();
+                }
+                else
+                {
+                    Node<T> current = _head;
+
+                    for (int i = 0; i < index; i++)
+                    {
+                        if (i == index - 1)
+                        {
+                            data = current.Next.Data;
+
+                            current.Next = current.Next?.Next;
+
+                            if (index == Count - 1)
+                            {
+                                _tail = current.Next;
+                            }
+
+                            break;
+                        }
+
+                        current = current.Next;
+                    }
+
+                    --Count;
+                }
+
+                return data;
+            }
+            else if (_head is null)
+            {
+                throw new NullReferenceException("List is empty!");
+            }
+            else
+            {
+                throw new IndexOutOfRangeException("Invalid index!");
+            }
         }
 
         public T RemoveStart()
         {
-            throw new NotImplementedException();
+            if (!(_head is null))
+            {
+                T data = _head.Data;
+
+                if (Count == 1)
+                {
+                    _head = null;
+                    _tail = null;
+                }
+                else
+                {
+                    _head = _head.Next;
+                }
+
+                --Count;
+
+                return data;
+            }
+
+            throw new NullReferenceException("List is empty!");
         }
 
         public T Remove()
         {
-            throw new NotImplementedException();
+            return RemoveByIndex(Count - 1);
         }
 
         public void RemoveRangeByIndex(int index)
@@ -224,7 +288,17 @@ namespace MyLinkedList
 
         private bool IsValidIndex(int index)
         {
-            return index >= 0 && index < Length;
+            return index >= 0 && index < Count;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new LinkedListEnumerator<T>(_head);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
