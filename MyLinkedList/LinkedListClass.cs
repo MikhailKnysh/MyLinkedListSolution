@@ -6,9 +6,9 @@ namespace MyLinkedList
 {
     public class LinkedListClass<T> : IList<T>, IEnumerable<T> where T : IComparable
     {
-        public Node<T> Head { get; set; }
+        private Node<T> _head;
 
-        public Node<T> Tail { get; set; }
+        private Node<T> _tail;
 
         public int Count { get; set; }
 
@@ -18,7 +18,7 @@ namespace MyLinkedList
             {
                 if (IsValidIndex(index))
                 {
-                    Node<T> current = Head;
+                    Node<T> current = _head;
 
                     for (int i = 1; i <= index; i++)
                     {
@@ -34,7 +34,7 @@ namespace MyLinkedList
             {
                 if (IsValidIndex(index) && !(value is null))
                 {
-                    Node<T> current = Head;
+                    Node<T> current = _head;
 
                     for (int i = 1; i <= index; i++)
                     {
@@ -57,8 +57,8 @@ namespace MyLinkedList
         public LinkedListClass()
         {
             Count = 0;
-            Head = null;
-            Tail = null;
+            _head = null;
+            _tail = null;
         }
 
         public LinkedListClass(T data)
@@ -66,8 +66,8 @@ namespace MyLinkedList
             if (data != null)
             {
                 Count = 1;
-                Head = new Node<T>(data);
-                Tail = Head;
+                _head = new Node<T>(data);
+                _tail = _head;
             }
             else
             {
@@ -83,19 +83,19 @@ namespace MyLinkedList
 
                 if (data.Length != 0)
                 {
-                    Head = new Node<T>(data[0]);
-                    Tail = Head;
+                    _head = new Node<T>(data[0]);
+                    _tail = _head;
 
                     for (int i = 1; i < data.Length; i++)
                     {
-                        Tail.Next = new Node<T>(data[i]);
-                        Tail = Tail.Next;
+                        _tail.Next = new Node<T>(data[i]);
+                        _tail = _tail.Next;
                     }
                 }
                 else
                 {
-                    Head = null;
-                    Tail = null;
+                    _head = null;
+                    _tail = null;
                 }
             }
             else
@@ -146,38 +146,43 @@ namespace MyLinkedList
 
         public T RemoveByIndex(int index)
         {
-            if (IsValidIndex(index) && !(Head is null))
+            if (IsValidIndex(index) && !(_head is null))
             {
                 T data = default;
 
                 if (index == 0)
                 {
-                    data = Head.Data;
-                    Head = Head.Next;
+                    RemoveStart();
                 }
                 else
                 {
-                    Tail = Head;
+                    Node<T> current = _head;
 
                     for (int i = 0; i < index; i++)
                     {
                         if (i == index - 1)
                         {
-                            data = Tail.Next.Data;
+                            data = current.Next.Data;
 
-                            Tail.Next = Tail.Next?.Next;
+                            current.Next = current.Next?.Next;
+
+                            if (index == Count - 1)
+                            {
+                                _tail = current.Next;
+                            }
+
                             break;
                         }
 
-                        Tail = Tail.Next;
+                        current = current.Next;
                     }
-                }
 
-                --Count;
+                    --Count;
+                }
 
                 return data;
             }
-            else if (Head is null)
+            else if (_head is null)
             {
                 throw new NullReferenceException("List is empty!");
             }
@@ -189,7 +194,26 @@ namespace MyLinkedList
 
         public T RemoveStart()
         {
-            return RemoveByIndex(0);
+            if (!(_head is null))
+            {
+                T data = _head.Data;
+
+                if (Count == 1)
+                {
+                    _head = null;
+                    _tail = null;
+                }
+                else
+                {
+                    _head = _head.Next;
+                }
+
+                --Count;
+
+                return data;
+            }
+
+            throw new NullReferenceException("List is empty!");
         }
 
         public T Remove()
@@ -269,7 +293,7 @@ namespace MyLinkedList
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new LinkedListEnumerator<T>(Head);
+            return new LinkedListEnumerator<T>(_head);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
