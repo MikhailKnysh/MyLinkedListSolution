@@ -158,7 +158,7 @@ namespace MyLinkedList
                     for (int i = 1; i < index; i++)
                     {
                         _tail = _tail.Next;
-                        if(i == index - 1)
+                        if (i == index - 1)
                         {
                             item.Next = _tail.Next;
                             _tail.Next = item;
@@ -183,7 +183,57 @@ namespace MyLinkedList
 
         public void AddRangeByIndex(int index, T[] collection)
         {
-            throw new NotImplementedException();
+            
+            if (index>=0 && index<=Length && !(collection is null) )
+            {
+                var temp = default(Node<T>);
+                Node<T> current = _head;
+
+                if (index == 0)
+                {
+                    temp = _head;
+                    _head = new Node<T>(collection[0]);
+                    current = _head;
+
+                    for (int i = 1; i < collection.Length; i++)
+                    {
+                        current.Next = new Node<T>(collection[i]);
+                        current = current.Next;
+                    }
+                    current.Next = temp;
+                    if (current.Next == null)
+                    {
+                        _tail = current.Next;
+                    }
+                }
+                //else if (index == Length)
+                //{
+                //    for (int i = 0; i < collection.Length; i++)
+                //    {
+                //        _tail.Next = new Node<T>(collection[i]);
+                //        _tail = _tail.Next;
+                //    }
+                //}
+                else
+                {
+                    int j = 0;
+                    int lenth = index + collection.Length;
+                    for (int i = 1; i < lenth; i++)
+                    {
+                        if (i >= (index ))
+                        {
+                            if (i == index )
+                            {
+                                 temp = current.Next;
+                            }
+                            current.Next = current.Next = new Node<T>(collection[j++]);
+                        }
+                        current = current.Next;
+                    }
+                    current.Next = temp;
+                }
+                Length += collection.Length;
+            }
         }
 
         public T RemoveByIndex(int index)

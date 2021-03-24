@@ -41,9 +41,20 @@ namespace MyLinkedList.Test
             throw new System.NotImplementedException();
         }
 
-        public override void AddRangeByIndex_WhenInputIsValued_ShouldAddItToCollection(int index, int[] collectionToInsert, int[] inputArray, int[] expectedArray)
+        //[TestCase(3, new int[] { 30, 40, 50 }, new int[] { 1, 2, 3, 4, 5, 6 },
+        //    new int[] { 1, 2, 3, 30, 40, 50, 4, 5, 6 })]
+        [TestCase(6, new int[] { 30, 40, 50 }, new int[] { 1, 2, 3, 4, 5, 6 }
+        , new int[] { 1, 2, 3, 4, 5, 6, 30, 40, 50 })]
+        [TestCase(0, new int[] { 30, 40, 50 }, new int[] { }, new int[] { 30, 40, 50 })]
+        public override void AddRangeByIndex_WhenInputIsValued_ShouldAddItToCollection(
+           int index, int[] collectionToInsert, int[] inputArray, int[] expectedArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            actualList.AddRangeByIndex(index, collectionToInsert);
+
+            CollectionAssert.AreEqual(expectedList, actualList);
         }
 
         public override void AddRangeStart_WhenInputIsValued_ShouldAddItToCollection(int[] collectionToInsert, int[] inputArray, int[] expectedArray)
