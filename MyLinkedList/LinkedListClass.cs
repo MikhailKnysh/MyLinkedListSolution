@@ -147,6 +147,7 @@ namespace MyLinkedList
                         {
                             item.Next = current.Next;
                             current.Next = item;
+                            
                             if (current.Next == null)
                             {
                                 _tail = current.Next;
