@@ -107,7 +107,9 @@ namespace MyLinkedList
 
         public void Clear()
         {
-            throw new NotImplementedException();
+             Count = 0;
+            _head = null;
+            _tail = null;
         }
 
         public T[] ToArray()
@@ -115,34 +117,115 @@ namespace MyLinkedList
             throw new NotImplementedException();
         }
 
-        public void AddStart(T value)
+        public void AddStart(T data)
         {
-            throw new NotImplementedException();
+            AddByIndex(index: 0, data);
         }
 
-        public void Add(T value)
+        public void Add(T data)
         {
-            throw new NotImplementedException();
+            AddByIndex(index: Count, data);
         }
 
-        public void AddByIndex(int index, T value)
+        public void AddByIndex(int index, T data)
         {
-            throw new NotImplementedException();
+            if (data != null && index >= 0 && index <= Count)
+            {
+                Node<T> item = new Node<T>(data);
+                if (index == 0)
+                {
+                    item.Next = _head;
+                    _head = item;
+                }
+                else
+                {
+                    Node<T> current = _head;
+
+                    for (int i = 1; i <= index; i++)
+                    {
+                        if (i == index)
+                        {
+                            item.Next = current.Next;
+                            current.Next = item;
+                            if (current.Next == null)
+                            {
+                                _tail = current.Next;
+                            }
+                        }
+                        current = current.Next;
+                    }
+                }
+
+                ++Count;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         public void AddRangeStart(T[] collection)
         {
-            throw new NotImplementedException();
+            AddRangeByIndex(index: 0, collection);
         }
 
         public void AddRange(T[] collection)
         {
-            throw new NotImplementedException();
+            AddRangeByIndex(index: Count, collection);
         }
 
         public void AddRangeByIndex(int index, T[] collection)
         {
-            throw new NotImplementedException();
+            
+            if (index>=0 && index<=Count && !(collection is null) )
+            {
+                var temp = default(Node<T>);
+                Node<T> current = _head;
+
+                if (index == 0)
+                {
+                    temp = _head;
+                    _head = new Node<T>(collection[0]);
+                    current = _head;
+
+                    for (int i = 1; i < collection.Length; i++)
+                    {
+                        current.Next = new Node<T>(collection[i]);
+                        current = current.Next;
+                    }
+
+                    current.Next = temp;
+
+                    if (current.Next == null)
+                    {
+                        _tail = current;
+                    }
+                }
+                else
+                {
+                    int j = 0;
+                    int lenth = index + collection.Length;
+
+                    for (int i = 1; i < lenth; i++)
+                    {
+                        if (i >= index)
+                        {
+                            if (i == index)
+                            {
+                                 temp = current.Next;
+                            }
+                            current.Next = current.Next = new Node<T>(collection[j++]);
+                        }
+                        current = current.Next;
+                    }
+                    current.Next = temp;
+                }
+                Count += collection.Length;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         public T RemoveByIndex(int index)
@@ -322,5 +405,30 @@ namespace MyLinkedList
         {
             return GetEnumerator();
         }
+        //public override bool Equals(object obj)
+        //{
+        //    LinkedListClass<T> list = (LinkedListClass<T>)obj;
+
+        //    if (this.Length != list.Length)
+        //    {
+        //        return false;
+        //    }
+
+        //    Node<T> currentThis = this.Head;
+        //    Node<T> currentList = list.Head;
+
+        //    do
+        //    {
+        //        if (!currentThis.Data.Equals(currentList.Data))
+        //        {
+        //            return false;
+        //        }
+        //        currentList = currentList.Next;
+        //        currentThis = currentThis.Next;
+        //    }
+        //    while (!(currentThis.Next is null));
+
+        //    return true;
+        //}
     }
 }
