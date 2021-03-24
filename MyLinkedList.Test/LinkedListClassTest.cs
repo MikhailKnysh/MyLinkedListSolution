@@ -154,9 +154,15 @@ namespace MyLinkedList.Test
             throw new System.NotImplementedException();
         }
 
-        public override void RemoveByIndex_WhenIndexOutOfRange_ShouldThrowArgumentOutOfRangeException(int index, int[] inputArray)
+        [TestCase(-1, new int[] { -2, 34, 5, 6 })]
+        [TestCase(4, new int[] { -2, 34, 5, 6 })]
+        [TestCase(10, new int[] { -2, 34, 5, 6 })]
+        public override void RemoveByIndex_WhenIndexOutOfRange_ShouldThrowIndexOutOfRangeException(
+            int index, int[] inputArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            Assert.Throws<IndexOutOfRangeException>(() => actualList.RemoveByIndex(index));
         }
 
         public override void RemoveByIndex_WhenIndexOutOfRange_ShouldThrowIndexOutOfRangeException(int index, int quantity, int[] inputArray)
@@ -174,9 +180,20 @@ namespace MyLinkedList.Test
             throw new System.NotImplementedException();
         }
 
-        public override void RemoveByIndex_WhenValidIndexPassed_ShouldDeleteElementByPosition(int index, int expectedValueToRemove, int[] inputArray, int[] expectedArray)
+        [TestCase(0, -2, new int[] { -2, 34, 5, 6, 57, 68, 65, -17 }, new int[] { 34, 5, 6, 57, 68, 65, -17 })]
+        [TestCase(1, 34, new int[] { -2, 34, 5, 6, 57, 68, 65, -17 }, new int[] { -2, 5, 6, 57, 68, 65, -17 })]
+        [TestCase(6, 65, new int[] { -2, 34, 5, 6, 57, 68, 65, -17 }, new int[] { -2, 34, 5, 6, 57, 68, -17 })]
+        [TestCase(7, -17, new int[] { -2, 34, 5, 6, 57, 68, 65, -17 }, new int[] { -2, 34, 5, 6, 57, 68, 65 })]
+        public override void RemoveByIndex_WhenValidIndexPassed_ShouldDeleteElementByPosition(
+            int index, int expectedValueToRemove, int[] inputArray, int[] expectedArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+
+            int actualValueToRemove = actualList.RemoveByIndex(index);
+
+            Assert.AreEqual(expectedValueToRemove, actualValueToRemove);
+            CollectionAssert.AreEqual(expectedList, actualList);
         }
 
         public override void RemoveByValueAll_WhenValidIndexPassed_ShouldRemoveFirstValue(int valueToRemove, int expectedCounter, int[] inputArray, int[] expectedArray)
@@ -199,24 +216,50 @@ namespace MyLinkedList.Test
             throw new System.NotImplementedException();
         }
 
-        public override void RemoveStart_WhenIndexOutOfRange_ShouldThrowArgumentOutOfRangeException()
+        [Test]
+        public override void RemoveStart_WhenListIsEmpty_ShouldThrowNullReferenceException()
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> inputList = new LinkedListClass<int>() { };
+
+            Assert.Throws<NullReferenceException>(() => inputList.RemoveStart());
         }
 
-        public override void RemoveStart_WhenValidIndexPassed_ShouldDeleteFirstElement(int expectedValueToRemove, int[] inputArray, int[] expectedArray)
+        [TestCase(-2, new int[] { -2, 34, 5, 6, 57, 68, 65, -17 }, new int[] { 34, 5, 6, 57, 68, 65, -17 })]
+        [TestCase(34, new int[] { 34, 96 }, new int[] { 96 })]
+        [TestCase(-117, new int[] { -117 }, new int[] { })]
+        public override void RemoveStart_WhenListIsValid_ShouldDeleteFirstElement(
+            int expectedValueToRemove, int[] inputArray, int[] expectedArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+
+            int actualValueToRemove = actualList.RemoveStart();
+
+            Assert.AreEqual(expectedValueToRemove, actualValueToRemove);
+            CollectionAssert.AreEqual(expectedList, actualList);
         }
 
-        public override void Remove_WhenIndexOutOfRange_ShouldThrowArgumentOutOfRangeException()
+        [Test]
+        public override void Remove_WhenListIsEmpty_ShouldThrowNullReferenceException()
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>();
+
+            Assert.Throws<NullReferenceException>(() => actualList.Remove());
         }
 
-        public override void Remove_WhenValidIndexPassed_ShouldDeleteLastElement(int expectedValueToRemove, int[] inputArray, int[] expectedArray)
+        [TestCase(-17, new int[] { 2, 34, 5, 6, 57, 68, 65, -17 }, new int[] { 2, 34, 5, 6, 57, 68, 65 })]
+        [TestCase(34, new int[] { 2, 34 }, new int[] { 2 })]
+        [TestCase(2, new int[] { 2 }, new int[] { })]
+        public override void Remove_WhenListIsValid_ShouldDeleteLastElement(
+            int expectedValueToRemove, int[] inputArray, int[] expectedArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+
+            int actualValueToRemove = actualList.Remove();
+
+            Assert.AreEqual(expectedValueToRemove, actualValueToRemove);
+            CollectionAssert.AreEqual(expectedList, actualList);
         }
 
         public override void Reverse_WhenValidListPassed_ShouldReverseList(int[] inputArray, int[] expectedArray)
@@ -234,9 +277,15 @@ namespace MyLinkedList.Test
             throw new System.NotImplementedException();
         }
 
-        public override void ToString_WhenCollectionIsValued_ShouldConvertCollectionToString(int[] inputArray, string expectedString)
+        [TestCase(new int[] { 6, 7, 2, 1, 5, 3, 4, 10, 8, 9 }, "6 7 2 1 5 3 4 10 8 9")]
+        public override void ToString_WhenCollectionIsValued_ShouldConvertCollectionToString(
+          int[] inputArray, string expectedString)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            string actualString = actualList.ToString();
+
+            Assert.AreEqual(expectedString, actualString);
         }
     }
 }
