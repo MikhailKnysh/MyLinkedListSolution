@@ -10,7 +10,7 @@ namespace MyLinkedList
 
         private Node<T> _tail;
 
-        public int Length { get; set; }
+        public int Count { get; set; }
 
         public T this[int index]
         {
@@ -56,7 +56,7 @@ namespace MyLinkedList
 
         public LinkedListClass()
         {
-            Length = 0;
+            Count = 0;
             _head = null;
             _tail = null;
         }
@@ -65,7 +65,7 @@ namespace MyLinkedList
         {
             if (data != null)
             {
-                Length = 1;
+                Count = 1;
                 _head = new Node<T>(data);
                 _tail = _head;
             }
@@ -79,7 +79,7 @@ namespace MyLinkedList
         {
             if (!(data is null))
             {
-                Length = data.Length;
+                Count = data.Length;
 
                 if (data.Length != 0)
                 {
@@ -106,7 +106,7 @@ namespace MyLinkedList
 
         public void Clear()
         {
-            Length = 0;
+             Count = 0;
             _head = null;
             _tail = null;
         }
@@ -116,36 +116,21 @@ namespace MyLinkedList
             throw new NotImplementedException();
         }
 
-        public void AddStart(T value)
+        public void AddStart(T data)
         {
-            AddByIndex(index: 0, value);
+            AddByIndex(index: 0, data);
         }
 
-        public void Add(T value)
+        public void Add(T data)
         {
-            if (value != null)
-            {
-                if (_head == null)
-                {
-                    _head = new Node<T>(value);
-                    _tail = _head;
-                }
-                else
-                {
-                    _tail.Next = new Node<T>(value);
-                    _tail = _tail.Next;
-                }
-
-
-                ++Length;
-            }
+            AddByIndex(index: Count, data);
         }
 
-        public void AddByIndex(int index, T value)
+        public void AddByIndex(int index, T data)
         {
-            if (value != null)
+            if (data != null && index >= 0 && index <= Count)
             {
-                Node<T> item = new Node<T>(value);
+                Node<T> item = new Node<T>(data);
                 if (index == 0)
                 {
                     item.Next = _head;
@@ -153,22 +138,29 @@ namespace MyLinkedList
                 }
                 else
                 {
-                    _tail = _head;
+                    Node<T> current = _head;
 
-                    for (int i = 1; i < index; i++)
+                    for (int i = 1; i <= index; i++)
                     {
-                        _tail = _tail.Next;
-                        if(i == index - 1)
+                        if (i == index)
                         {
-                            item.Next = _tail.Next;
-                            _tail.Next = item;
+                            item.Next = current.Next;
+                            current.Next = item;
+                            if (current.Next == null)
+                            {
+                                _tail = current.Next;
+                            }
                         }
+                        current = current.Next;
                     }
                 }
 
-                ++Length;
+                ++Count;
             }
-
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         public void AddRangeStart(T[] collection)
@@ -268,7 +260,7 @@ namespace MyLinkedList
 
         private bool IsValidIndex(int index)
         {
-            return index >= 0 && index < Length;
+            return index >= 0 && index < Count;
         }
 
         public IEnumerator<T> GetEnumerator()
