@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -284,6 +285,27 @@ namespace MyLinkedList
         public void HalfReverse()
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            if (Length != 0)
+            {
+                Node<T> current = Head;
+                StringBuilder stringBuilder = new StringBuilder($"{current.Data} ");
+
+                while (!(current.Next is null))
+                {
+                    current = current.Next;
+                    stringBuilder.Append($"{current.Data} ");
+                }
+
+                return stringBuilder.ToString().Trim();
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         private bool IsValidIndex(int index)

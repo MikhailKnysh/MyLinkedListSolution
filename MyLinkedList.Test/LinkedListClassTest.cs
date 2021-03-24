@@ -218,9 +218,15 @@ namespace MyLinkedList.Test
             throw new System.NotImplementedException();
         }
 
-        public override void ToString_WhenCollectionIsValued_ShouldConvertCollectionToString(int[] inputArray, string expectedString)
+        [TestCase(new int[] { 6, 7, 2, 1, 5, 3, 4, 10, 8, 9 }, "6 7 2 1 5 3 4 10 8 9")]
+        public override void ToString_WhenCollectionIsValued_ShouldConvertCollectionToString(
+          int[] inputArray, string expectedString)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            string actualString = actualList.ToString();
+
+            Assert.AreEqual(expectedString, actualString);
         }
     }
 }
