@@ -316,14 +316,50 @@ namespace MyLinkedList
             return RemoveByIndex(Count - 1);
         }
 
-        public void RemoveRangeByIndex(int index)
+        public void RemoveRangeByIndex(int index, int quantity)
         {
-            throw new NotImplementedException();
+            if (IsValidIndex(index) && !(_head is null) && quantity <= Count - index)
+            {
+                Node<T> current = _head;
+                Node<T> item = default;
+                int indexLasrDeletItem = index + quantity;
+                if (index == 0)
+                {
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        current = current.Next;
+                    }
+
+                    _head = current;
+                }
+                else
+                {
+                    for (int i = 1; i <= Count; i++)
+                    {
+                        if (i == index)
+                        {
+                            item = current;
+
+                        }
+                        else if (i == indexLasrDeletItem)
+                        {
+                            item.Next = current.Next;
+                            current = item;
+                        }
+
+                        current = current.Next;
+
+
+                    }
+                }
+
+                Count -= quantity;
+            }
         }
 
-        public void RemoveRangeStart()
+        public void RemoveRangeStart(int quantity)
         {
-            throw new NotImplementedException();
+            RemoveRangeByIndex(index: 0, quantity);
         }
 
         public void RemoveRange()
@@ -487,12 +523,75 @@ namespace MyLinkedList
 
         public void Reverse()
         {
-            throw new NotImplementedException();
+            if (!(_head is null))
+            {
+                Node<T> current = _head;
+                Node<T> previos = null;
+                Node<T> next = null;
+
+                do
+                {
+                    next = current.Next;
+                    current.Next = previos;
+                    previos = current;
+                    current = next;
+                }
+                while (!(current is null));
+                _head = previos;
+            }
+
         }
 
         public void HalfReverse()
         {
-            throw new NotImplementedException();
+            if (!(_head is null))
+            {
+                Node<T> current = _head;
+                Node<T> temp = _head;
+
+                if (Count % 2 == 0)
+                {
+                    int coef = Count / 2;
+
+                    for (int i = 0; i < Count + coef - 1; i++)
+                    {
+                        if (i == coef)
+                        {
+                            _head = current;
+                        }
+                        if (i == Count - 1)
+                        {
+                            current.Next = temp;
+                        }
+
+                        current = current.Next;
+                    }
+                    current.Next = null;
+                }
+                else
+                {
+                    Node<T> item = default;
+                    int coef = (Count + 1) / 2;
+
+                    for (int i = 1; i < Count + coef; i++)
+                    {
+                        if (i == coef)
+                        {
+                            item = current;
+                            _head = current.Next;
+                        }
+                        if (i == Count)
+                        {
+                            current.Next = item;
+                            current.Next.Next = temp;
+                        }
+
+                        current = current.Next;
+                    }
+                    current.Next = null;
+
+                }
+            }
         }
 
         public override string ToString()
