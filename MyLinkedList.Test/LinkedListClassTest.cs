@@ -110,24 +110,48 @@ namespace MyLinkedList.Test
             throw new System.NotImplementedException();
         }
 
-        public override void GetMaxIndex_WhenInputIsNotValid_ShouldThrowInvalidOperationExeption(int[] inputArray)
+        [TestCase(2, new int[] { 1, 2, 10, 4, 5, 6 })]
+        [TestCase(5, new int[] { 1, 2, 10, 4, 5, 50 })]
+        [TestCase(0, new int[] { 1 })]
+        public override void GetMaxIndex_WhenInputIsValued_ShouldFindIndexMaxElement(
+             int expectedIndex, int[] inputArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> acualList = new LinkedListClass<int>(inputArray);
+
+            int actualIndex = acualList.GetMaxIndex();
+
+            Assert.AreEqual(expectedIndex, actualIndex);
         }
 
-        public override void GetMaxIndex_WhenInputIsNotValid_ShouldThrowNullReferenceExeption(int[] inputArray)
+        [TestCase(new int[] { })]
+        public override void GetMaxIndex_WhenInputIsNotValid_ShouldThrowInvalidOperationExeption(
+           int[] inputArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            Assert.Throws<InvalidOperationException>(() => actualList.GetMaxIndex());
         }
 
-        public override void GetMaxIndex_WhenInputIsValued_ShouldFindIndexMaxElement(int expectedIndex, int[] inputArray)
+        [TestCase(10, new int[] { 1, 2, 10, 4, 5, 6, 7, 8, 9, 6 })]
+        [TestCase(50, new int[] { 1, 2, 10, 4, 5, 50 })]
+        [TestCase(1, new int[] { 1 })]
+        public override void GetMax_WhenInputIsValued_ShouldFindMaxElement(
+            int expectedMax, int[] inputArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            int actualMax = actualList.GetMax();
+
+            Assert.AreEqual(expectedMax, actualMax);
         }
 
-        public override void GetMax_WhenInputIsValued_ShouldFindMaxElement(int expectedMax, int[] inputArray)
+        [TestCase(new int[] { })]
+        public void GetMax_WhenInputIsNotValid_ShouldThrowInvalidOperationExeption(
+           int[] inputArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            Assert.Throws<InvalidOperationException>(() => actualList.GetMax());
         }
 
         public override void GetMinIndex_WhenInputIsNotValid_ShouldThrowInvalidOperationInvalidOperationExeption(int[] inputArray)
