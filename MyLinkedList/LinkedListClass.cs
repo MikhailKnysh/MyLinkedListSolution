@@ -331,9 +331,24 @@ namespace MyLinkedList
             throw new NotImplementedException();
         }
 
-        public int RemoveByValueFirst(T value)
+        public int RemoveByValueFirst(T data)
         {
-            throw new NotImplementedException();
+            int index = -1;
+            Node<T> current = _head;
+
+            for (int i = 0; i < Count; i++)
+            {
+                if (current.Data.CompareTo(data) == 0)
+                {
+                    RemoveByIndex(i);
+                    index = i;
+                    break;
+                }
+
+                current = current.Next;
+            }
+
+            return index;
         }
 
         public int RemoveByValueAll(T value)
@@ -421,8 +436,7 @@ namespace MyLinkedList
             {
                 Node<T> current = _head;
                 T dataMin = _head.Data;
-                int index = 0;
-
+                
                 for (int i = 1; i < Count; i++)
                 {
                     if (dataMin.CompareTo(current.Next.Data) == 1)
