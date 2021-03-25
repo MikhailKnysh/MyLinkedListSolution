@@ -247,9 +247,21 @@ namespace MyLinkedList
             throw new NotImplementedException();
         }
 
-        public int FindIndexByValue(T value)
+        public int FindIndexByValue(T data)
         {
-            throw new NotImplementedException();
+            int index = -1;
+            Node<T> current = _head;
+
+            for (int i = 0; i < Count; i++)
+            {
+                if (current.Data.CompareTo(data) == 0)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
         }
 
         public int GetMaxIndex()

@@ -40,9 +40,14 @@ namespace MyLinkedList.Test
             throw new System.NotImplementedException();
         }
 
-        public override void FindIndexByValue_WhenValidIndexPassed_ShouldReturnIndex(int valueToInsert, int expectedIndex, int[] inputArray)
+        [TestCase(-2, 0, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 })]
+        public override void FindIndexByValue_WhenValidIndexPassed_ShouldReturnIndex(
+            int value, int expectedIndex, int[] inputArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> list = new LinkedListClass<int>(inputArray);
+            int actualIndex = list.FindIndexByValue(value);
+
+            Assert.AreEqual(expectedIndex, actualIndex);
         }
 
         public override void GetMaxIndex_WhenInputIsNotValid_ShouldThrowInvalidOperationExeption(int[] inputArray)
