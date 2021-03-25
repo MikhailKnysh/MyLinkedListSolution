@@ -248,16 +248,26 @@ namespace MyLinkedList.Test
         [TestCase(34, 2, new int[] { -2, 34, 5, 6, -2, 57, 34, 68, 65, -2, -17 }, new int[] { -2, 5, 6, -2, 57, 68, 65, -2, -17 })]
         [TestCase(13, 0, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 })]
         [TestCase(13, 0, new int[] { }, new int[] { })]
-        public override void RemoveByValueAll_WhenValidIndexPassed_ShouldRemoveFirstValue(
+        public override void RemoveAllByValue_WhenValidIndexPassed_ShouldRemoveFirstValue(
             int valueToRemove, int expectedCounter, int[] inputArray, int[] expectedArray)
         {
             LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
             LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
 
-            int actualCounter = actualList.RemoveByValueAll(valueToRemove);
+            int actualCounter = actualList.RemoveAllByValue(valueToRemove);
 
             Assert.AreEqual(expectedCounter, actualCounter);
             CollectionAssert.AreEqual(expectedList, actualList);
+        }
+
+
+        [TestCase(null, new int[] { })]
+        public override void RemoveAllByValue_WhenValidIndexPassed_ShouldThrowNullReferenceException(
+            int valueToRemove, int[] inputArray)
+        {
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            Assert.Throws<NullReferenceException>(() => actualList.RemoveByIndex(valueToRemove));
         }
 
         [TestCase(-2, 0, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { 34, 5, 6, -2, 57, 68, 65, -2, -17 })]

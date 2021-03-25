@@ -394,26 +394,31 @@ namespace MyLinkedList
             return index;
         }
 
-        public int RemoveByValueAll(T data)
+        public int RemoveAllByValue(T data)
         {
-            int counter = 0;
-            Node<T> current = _head;
-
-            for (int i = 0; i < Count; i++)
+            if (!(data is null))
             {
-                if (current.Data.CompareTo(data) == 0)
+                int counter = 0;
+                Node<T> current = _head;
+
+                for (int i = 0; i < Count; i++)
                 {
-                    RemoveByIndex(i);
-                    ++counter;
-                    --i;
+                    if (current.Data.CompareTo(data) == 0)
+                    {
+                        RemoveByIndex(i);
+                        ++counter;
+                        --i;
+                    }
+
+                    current = current.Next;
                 }
 
-                current = current.Next;
+                Count -= counter;
+
+                return counter;
             }
 
-            Count -= counter;
-
-            return counter;
+            throw new NullReferenceException("Null data passed!");
         }
 
         public int FindIndexByValue(T data)
