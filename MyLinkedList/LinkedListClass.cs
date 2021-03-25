@@ -107,7 +107,7 @@ namespace MyLinkedList
 
         public void Clear()
         {
-             Count = 0;
+            Count = 0;
             _head = null;
             _tail = null;
         }
@@ -147,7 +147,7 @@ namespace MyLinkedList
                         {
                             item.Next = current.Next;
                             current.Next = item;
-                            
+
                             if (current.Next == null)
                             {
                                 _tail = current.Next;
@@ -177,8 +177,8 @@ namespace MyLinkedList
 
         public void AddRangeByIndex(int index, T[] collection)
         {
-            
-            if (index>=0 && index<=Count && !(collection is null) )
+
+            if (index >= 0 && index <= Count && !(collection is null))
             {
                 var temp = default(Node<T>);
                 Node<T> current = _head;
@@ -213,7 +213,7 @@ namespace MyLinkedList
                         {
                             if (i == index)
                             {
-                                 temp = current.Next;
+                                temp = current.Next;
                             }
                             current.Next = current.Next = new Node<T>(collection[j++]);
                         }
@@ -237,7 +237,7 @@ namespace MyLinkedList
 
                 if (index == 0)
                 {
-                   data = RemoveStart();
+                    data = RemoveStart();
                 }
                 else
                 {
@@ -326,9 +326,39 @@ namespace MyLinkedList
             throw new NotImplementedException();
         }
 
-        public int RemoveByValueAll(T value)
+        public int RemoveByValueAll(T data)
         {
-            throw new NotImplementedException();
+            int counter = 0;
+            Node<T> current = _head;
+            //Node<T> next = current.Next;
+
+            //for (int i = 0; i < Count; i++)
+            //{
+            //    if (current.Data.CompareTo(data) == 0)
+            //    {
+            //        if (current.Data.CompareTo(_head.Data) == 0)
+            //        {
+
+            //        }
+            //    }
+
+            //    current = next;
+            //    next = next.Next;
+            //}
+
+            for (int i = 0; i < Count; i++)
+            {
+                if(current.Data.CompareTo(data) == 0)
+                {
+                    RemoveByIndex(i);
+                    ++counter;
+                    --i;
+                }
+
+                current = current.Next;
+            }
+
+            return counter;
         }
 
         public int FindIndexByValue(T value)
@@ -385,7 +415,7 @@ namespace MyLinkedList
 
         public int GetMinIndex()
         {
-            if(!(_head is null))
+            if (!(_head is null))
             {
                 Node<T> current = _head;
                 T dataMin = _head.Data;
@@ -411,7 +441,6 @@ namespace MyLinkedList
             {
                 Node<T> current = _head;
                 T dataMin = _head.Data;
-                int index = 0;
 
                 for (int i = 1; i < Count; i++)
                 {
