@@ -330,21 +330,6 @@ namespace MyLinkedList
         {
             int counter = 0;
             Node<T> current = _head;
-            //Node<T> next = current.Next;
-
-            //for (int i = 0; i < Count; i++)
-            //{
-            //    if (current.Data.CompareTo(data) == 0)
-            //    {
-            //        if (current.Data.CompareTo(_head.Data) == 0)
-            //        {
-
-            //        }
-            //    }
-
-            //    current = next;
-            //    next = next.Next;
-            //}
 
             for (int i = 0; i < Count; i++)
             {
@@ -353,6 +338,7 @@ namespace MyLinkedList
                     RemoveByIndex(i);
                     ++counter;
                     --i;
+                    --Count;
                 }
 
                 current = current.Next;
