@@ -107,14 +107,24 @@ namespace MyLinkedList
 
         public void Clear()
         {
-             Count = 0;
+            Count = 0;
             _head = null;
             _tail = null;
         }
 
         public T[] ToArray()
         {
-            throw new NotImplementedException();
+            T[] array = new T[Count];
+            if (!(_head is null))
+            {
+                Node<T> current = _head;
+                for (int i = 0; i < Count; i++)
+                {
+                    array[i] = current.Data;
+                    current = current.Next;
+                }
+            }
+            return array;
         }
 
         public void AddStart(T data)
@@ -147,7 +157,7 @@ namespace MyLinkedList
                         {
                             item.Next = current.Next;
                             current.Next = item;
-                            
+
                             if (current.Next == null)
                             {
                                 _tail = current.Next;
@@ -177,8 +187,8 @@ namespace MyLinkedList
 
         public void AddRangeByIndex(int index, T[] collection)
         {
-            
-            if (index>=0 && index<=Count && !(collection is null) )
+
+            if (index >= 0 && index <= Count && !(collection is null))
             {
                 var temp = default(Node<T>);
                 Node<T> current = _head;
@@ -213,7 +223,7 @@ namespace MyLinkedList
                         {
                             if (i == index)
                             {
-                                 temp = current.Next;
+                                temp = current.Next;
                             }
                             current.Next = current.Next = new Node<T>(collection[j++]);
                         }
@@ -237,7 +247,7 @@ namespace MyLinkedList
 
                 if (index == 0)
                 {
-                   data = RemoveStart();
+                    data = RemoveStart();
                 }
                 else
                 {
