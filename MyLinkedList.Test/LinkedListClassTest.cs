@@ -5,9 +5,9 @@ namespace MyLinkedList.Test
 {
     public class LinkedListClassTest : MyListBase
     {
-        [TestCase( 10, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 },
-            new int[] {10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
-        public  void AddStart_WhenInputValue_ShouldAddItToCollection(
+        [TestCase(10, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 },
+            new int[] { 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
+        public void AddStart_WhenInputValue_ShouldAddItToCollection(
            int valueToInsert, int[] inputArray, int[] expectedArray)
         {
             LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
@@ -75,13 +75,13 @@ namespace MyLinkedList.Test
             LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
             LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
 
-            actualList.AddRangeStart( collectionToInsert);
+            actualList.AddRangeStart(collectionToInsert);
 
             CollectionAssert.AreEqual(expectedList, actualList);
         }
 
         [TestCase(new int[] { 90, 10, 50 }, new int[] { 1, 2, 3, 4, 5, 6 }, new int[] { 1, 2, 3, 4, 5, 6, 90, 10, 50 })]
-        [TestCase(new int[] { 90, 10, 50 }, new int[] {  }, new int[] { 90, 10, 50 })]
+        [TestCase(new int[] { 90, 10, 50 }, new int[] { }, new int[] { 90, 10, 50 })]
         public override void AddRange_WhenInputIsValued_ShouldAddItToCollection(int[] collectionToInsert, int[] inputArray, int[] expectedArray)
         {
             LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
@@ -130,24 +130,48 @@ namespace MyLinkedList.Test
             throw new System.NotImplementedException();
         }
 
-        public override void GetMinIndex_WhenInputIsNotValid_ShouldThrowInvalidOperationInvalidOperationExeption(int[] inputArray)
+        [TestCase(3, new int[] { 1, 2, 10, 0, 4, 5, 6 })]
+        [TestCase(6, new int[] { 2, 2, 10, 3, 4, 5, 1 })]
+        [TestCase(0, new int[] { 1 })]
+        public override void GetMinIndex_WhenInputIsValid_ShouldFindIndexMinElement(
+       int expectedIndex, int[] inputArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            int actualIndex = actualList.GetMinIndex();
+
+            Assert.AreEqual(expectedIndex, actualIndex);
         }
 
-        public override void GetMinIndex_WhenInputIsNotValid_ShouldThrowNullReferenceExeption(int[] inputArray)
+        [TestCase(new int[] { })]
+        public override void GetMinIndex_WhenInputIsNotValid_ShouldThrowInvalidOperationInvalidOperationExeption(
+                  int[] inputArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            Assert.Throws<InvalidOperationException>(() => actualList.GetMinIndex());
         }
 
-        public override void GetMinIndex_WhenInputIsValid_ShouldFindIndexMinElement(int expectedIndex, int[] inputArray)
+        [TestCase(0, new int[] { 1, 2, 10, 0, 4, 5, 6 })]
+        [TestCase(1, new int[] { 2, 2, 10, 3, 4, 5, 1 })]
+        [TestCase(1, new int[] { 1 })]
+        public override void GetMin_WhenInputIsValued_ShouldFindMinElement(
+        int expectedMin, int[] inputArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            int actualMin = actualList.GetMin();
+
+            Assert.AreEqual(expectedMin, actualMin);
         }
 
-        public override void GetMin_WhenInputIsValued_ShouldFindMaxElement(int expectedMin, int[] inputArray)
+        [TestCase(new int[] { })]
+        public void GetMin_WhenInputIsNotValid_ShouldThrowInvalidOperationInvalidOperationExeption(
+                 int[] inputArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            Assert.Throws<InvalidOperationException>(() => actualList.GetMin());
         }
 
         public override void HalfReverse_WhenValidListPassed_ShouldReverseListByHalves(int[] inputArray, int[] expectedArray)

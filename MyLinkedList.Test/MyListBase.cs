@@ -15,9 +15,8 @@
         public abstract void GetMaxIndex_WhenInputIsValued_ShouldFindIndexMaxElement(int expectedIndex, int[] inputArray);
         public abstract void GetMax_WhenInputIsValued_ShouldFindMaxElement(int expectedMax, int[] inputArray);
         public abstract void GetMinIndex_WhenInputIsNotValid_ShouldThrowInvalidOperationInvalidOperationExeption(int[] inputArray);
-        public abstract void GetMinIndex_WhenInputIsNotValid_ShouldThrowNullReferenceExeption(int[] inputArray);
         public abstract void GetMinIndex_WhenInputIsValid_ShouldFindIndexMinElement(int expectedIndex, int[] inputArray);
-        public abstract void GetMin_WhenInputIsValued_ShouldFindMaxElement(int expectedMin, int[] inputArray);
+        public abstract void GetMin_WhenInputIsValued_ShouldFindMinElement(int expectedMin, int[] inputArray);
         public abstract void HalfReverse_WhenValidListPassed_ShouldReverseListByHalves(int[] inputArray, int[] expectedArray);
         public abstract void HalfReverse_WhenValidListPassed_ShouldReverseListByHalves(int[] inputArray);
         public abstract void RemoveByIndex_WhenIndexOutOfRange_ShouldThrowIndexOutOfRangeException(int index, int[] inputArray);

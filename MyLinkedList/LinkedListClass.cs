@@ -348,12 +348,47 @@ namespace MyLinkedList
 
         public int GetMinIndex()
         {
-            throw new NotImplementedException();
+            if(!(_head is null))
+            {
+                Node<T> current = _head;
+                T dataMin = _head.Data;
+                int index = 0;
+
+                for (int i = 1; i < Count; i++)
+                {
+                    if (dataMin.CompareTo(current.Next.Data) == 1)
+                    {
+                        index = i;
+                        dataMin = current.Next.Data;
+                    }
+                    current = current.Next;
+                }
+                return index;
+            }
+            throw new InvalidOperationException();
         }
 
         public T GetMin()
         {
-            throw new NotImplementedException();
+            if (!(_head is null))
+            {
+                Node<T> current = _head;
+                T dataMin = _head.Data;
+                int index = 0;
+
+                for (int i = 1; i < Count; i++)
+                {
+                    if (dataMin.CompareTo(current.Next.Data) == 1)
+                    {
+                        dataMin = current.Next.Data;
+                    }
+                    current = current.Next;
+                }
+
+                return dataMin;
+            }
+
+            throw new InvalidOperationException();
         }
 
         public void Sort(bool isAscending)
