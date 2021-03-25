@@ -435,7 +435,23 @@ namespace MyLinkedList
 
         public void Reverse()
         {
-            throw new NotImplementedException();
+            if(!(_head is null))
+            {
+                Node<T> current = _head;
+                Node<T> previos = null;
+                Node<T> next = null;
+
+                do
+                {
+                    next = current.Next;
+                    current.Next = previos;
+                    previos = current;
+                    current = next;
+                }
+                while (!(current is null));
+                _head = previos;
+            }
+            
         }
 
         public void HalfReverse()
