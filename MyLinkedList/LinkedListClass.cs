@@ -306,9 +306,45 @@ namespace MyLinkedList
             return RemoveByIndex(Count - 1);
         }
 
-        public void RemoveRangeByIndex(int index)
+        public void RemoveRangeByIndex(int index, int quantity)
         {
-            throw new NotImplementedException();
+            if(IsValidIndex(index) && !(_head is null) && quantity<=Count-index)
+            {
+                Node<T> current = _head;
+                Node<T> item = default;
+                int indexLasrDeletItem = index + quantity;
+                if (index == 0)
+                {
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        current = current.Next;
+                    }
+
+                    _head = current;
+                }
+                else
+                {
+                    for (int i = 1; i <= Count; i++)
+                    {
+                        if (i == index)
+                        {
+                            item = current;
+
+                        }
+                        else if (i == indexLasrDeletItem)
+                        {
+                            item.Next = current.Next;
+                            current = item;
+                        }
+
+                        current = current.Next;
+
+
+                    }
+                }
+
+                Count -= quantity;
+            }
         }
 
         public void RemoveRangeStart()
@@ -411,7 +447,6 @@ namespace MyLinkedList
             {
                 Node<T> current = _head;
                 T dataMin = _head.Data;
-                int index = 0;
 
                 for (int i = 1; i < Count; i++)
                 {

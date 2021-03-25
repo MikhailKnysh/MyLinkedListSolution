@@ -260,9 +260,19 @@ namespace MyLinkedList.Test
             throw new System.NotImplementedException();
         }
 
-        public override void RemoveRangeByIndex_WhenValidIndexPassed_ShouldRemoveRangeByIndex(int index, int quantity, int[] inputArray, int[] expectedArray)
+        [TestCase(4, 3, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 34, 5, 6, 65, -2, -17 })]
+        [TestCase(0, 7, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { 65, -2, -17 })]
+        [TestCase(6, 4, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 34, 5, 6, -2, 57 })]
+        [TestCase(0, 10, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { })]
+        public override void RemoveRangeByIndex_WhenValidIndexPassed_ShouldRemoveRangeByIndex(
+           int index, int quantity, int[] inputArray, int[] expectedArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+
+            actualList.RemoveRangeByIndex(index, quantity);
+
+            CollectionAssert.AreEqual(expectedList, actualList);
         }
 
         public override void RemoveRangeStart_WhenValidIndexPassed_ShouldRemoveRangeStart(int quantity, int[] inputArray, int[] expectedArray)

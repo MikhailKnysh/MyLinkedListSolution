@@ -18,7 +18,7 @@ namespace MyLinkedList
         T RemoveByIndex(int index);
         T RemoveStart();
         T Remove();
-        void RemoveRangeByIndex(int index);
+        void RemoveRangeByIndex(int index, int quantity);
         void RemoveRangeStart();
         void RemoveRange();
         int RemoveByValueFirst(T value);
