@@ -351,10 +351,13 @@ namespace MyLinkedList
                         index = i;
                         dataMax = current.Next.Data;
                     }
+
                     current = current.Next;
                 }
+
                 return index;
             }
+
             throw new InvalidOperationException();
         }
 
@@ -364,7 +367,6 @@ namespace MyLinkedList
             {
                 Node<T> current = _head;
                 T dataMax = _head.Data;
-                int index = 0;
 
                 for (int i = 1; i < Count; i++)
                 {
@@ -374,8 +376,10 @@ namespace MyLinkedList
                     }
                     current = current.Next;
                 }
+
                 return dataMax;
             }
+
             throw new InvalidOperationException();
         }
 
