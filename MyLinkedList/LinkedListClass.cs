@@ -107,7 +107,7 @@ namespace MyLinkedList
 
         public void Clear()
         {
-             Count = 0;
+            Count = 0;
             _head = null;
             _tail = null;
         }
@@ -147,7 +147,7 @@ namespace MyLinkedList
                         {
                             item.Next = current.Next;
                             current.Next = item;
-                            
+
                             if (current.Next == null)
                             {
                                 _tail = current.Next;
@@ -177,8 +177,8 @@ namespace MyLinkedList
 
         public void AddRangeByIndex(int index, T[] collection)
         {
-            
-            if (index>=0 && index<=Count && !(collection is null) )
+
+            if (index >= 0 && index <= Count && !(collection is null))
             {
                 var temp = default(Node<T>);
                 Node<T> current = _head;
@@ -213,7 +213,7 @@ namespace MyLinkedList
                         {
                             if (i == index)
                             {
-                                 temp = current.Next;
+                                temp = current.Next;
                             }
                             current.Next = current.Next = new Node<T>(collection[j++]);
                         }
@@ -237,7 +237,7 @@ namespace MyLinkedList
 
                 if (index == 0)
                 {
-                   data = RemoveStart();
+                    data = RemoveStart();
                 }
                 else
                 {
@@ -308,7 +308,7 @@ namespace MyLinkedList
 
         public void RemoveRangeByIndex(int index, int quantity)
         {
-            if(IsValidIndex(index) && !(_head is null) && quantity<=Count-index)
+            if (IsValidIndex(index) && !(_head is null) && quantity <= Count - index)
             {
                 Node<T> current = _head;
                 Node<T> item = default;
@@ -347,9 +347,9 @@ namespace MyLinkedList
             }
         }
 
-        public void RemoveRangeStart()
+        public void RemoveRangeStart(int quantity)
         {
-            throw new NotImplementedException();
+            RemoveRangeByIndex(index: 0, quantity);
         }
 
         public void RemoveRange()
@@ -421,7 +421,7 @@ namespace MyLinkedList
 
         public int GetMinIndex()
         {
-            if(!(_head is null))
+            if (!(_head is null))
             {
                 Node<T> current = _head;
                 T dataMin = _head.Data;
@@ -470,7 +470,7 @@ namespace MyLinkedList
 
         public void Reverse()
         {
-            if(!(_head is null))
+            if (!(_head is null))
             {
                 Node<T> current = _head;
                 Node<T> previos = null;
@@ -486,12 +486,59 @@ namespace MyLinkedList
                 while (!(current is null));
                 _head = previos;
             }
-            
+
         }
 
         public void HalfReverse()
         {
-            throw new NotImplementedException();
+            if (!(_head is null))
+            {
+                Node<T> current = _head;
+                Node<T> temp = _head;
+
+                if (Count % 2 == 0)
+                {
+                    int coef = Count / 2;
+
+                    for (int i = 0; i < Count + coef - 1; i++)
+                    {
+                        if (i == coef)
+                        {
+                            _head = current;
+                        }
+                        if (i == Count - 1)
+                        {
+                            current.Next = temp;
+                        }
+
+                        current = current.Next;
+                    }
+                    current.Next = null;
+                }
+                else
+                {
+                    Node<T> item = default;
+                    int coef = (Count + 1) / 2;
+
+                    for (int i = 1; i < Count + coef; i++)
+                    {
+                        if (i == coef)
+                        {
+                            item = current;
+                            _head = current.Next;
+                        }
+                        if (i == Count)
+                        {
+                            current.Next = item;
+                            current.Next.Next = temp;
+                        }
+
+                        current = current.Next;
+                    }
+                    current.Next = null;
+
+                }
+            }
         }
 
         public override string ToString()

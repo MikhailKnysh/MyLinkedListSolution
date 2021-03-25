@@ -198,9 +198,18 @@ namespace MyLinkedList.Test
             Assert.Throws<InvalidOperationException>(() => actualList.GetMin());
         }
 
-        public override void HalfReverse_WhenValidListPassed_ShouldReverseListByHalves(int[] inputArray, int[] expectedArray)
+        [TestCase(new int[] { -2, 34, 5, 57, 68, 65 }, new int[] { 57, 68, 65, -2, 34, 5 })]
+        [TestCase(new int[] { -2, 34, 5, 1057, 57, 68, 65 }, new int[] { 57, 68, 65, 1057, -2, 34, 5 })]
+        [TestCase(new int[] { }, new int[] { })]
+        public override void HalfReverse_WhenValidListPassed_ShouldReverseListByHalves(
+            int[] inputArray, int[] expectedArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+
+            actualList.HalfReverse();
+
+            CollectionAssert.AreEqual(expectedList, actualList);
         }
 
         public override void HalfReverse_WhenValidListPassed_ShouldReverseListByHalves(int[] inputArray)
