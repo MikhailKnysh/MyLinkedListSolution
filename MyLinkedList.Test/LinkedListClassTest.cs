@@ -217,11 +217,6 @@ namespace MyLinkedList.Test
             CollectionAssert.AreEqual(expectedList, actualList);
         }
 
-        public override void HalfReverse_WhenValidListPassed_ShouldReverseListByHalves(int[] inputArray)
-        {
-            throw new System.NotImplementedException();
-        }
-
         [TestCase(-1, new int[] { -2, 34, 5, 6 })]
         [TestCase(4, new int[] { -2, 34, 5, 6 })]
         [TestCase(10, new int[] { -2, 34, 5, 6 })]
@@ -231,21 +226,6 @@ namespace MyLinkedList.Test
             LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
 
             Assert.Throws<IndexOutOfRangeException>(() => actualList.RemoveByIndex(index));
-        }
-
-        public override void RemoveByIndex_WhenIndexOutOfRange_ShouldThrowIndexOutOfRangeException(int index, int quantity, int[] inputArray)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void RemoveByIndex_WhenIndexOutOfRange_ShouldThrowInvalidOperationException(int index, int quantity, int[] inputArray)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void RemoveByIndex_WhenIndexOutOfRange_ShouldThrowInvalidOperationException(int quantity, int[] inputArray)
-        {
-            throw new System.NotImplementedException();
         }
 
         [TestCase(0, -2, new int[] { -2, 34, 5, 6, 57, 68, 65, -17 }, new int[] { 34, 5, 6, 57, 68, 65, -17 })]
@@ -316,9 +296,34 @@ namespace MyLinkedList.Test
             CollectionAssert.AreEqual(expectedList, actualList);
         }
 
-        public override void RemoveRangeStart_WhenValidIndexPassed_ShouldRemoveRangeStart(int quantity, int[] inputArray, int[] expectedArray)
+        [TestCase(0, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 })]
+        [TestCase(4, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 57, 68, 65, -2, -17 })]
+        [TestCase(7, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { 65, -2, -17 })]
+        [TestCase(10, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { })]
+        public override void RemoveRangeStart_WhenValidIndexPassed_ShouldRemoveRangeStart(
+            int quantity, int[] inputArray, int[] expectedArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+
+            actualList.RemoveRangeStart(quantity);
+
+            CollectionAssert.AreEqual(expectedList, actualList);
+        }
+
+        [TestCase(0, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 })]
+        [TestCase(4, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 34, 5, 6, -2, 57 })]
+        [TestCase(7, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 34, 5 })]
+        [TestCase(10, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { })]
+        public override void RemoveRange_WhenValidIndexPassed_ShouldRemoveRangeEnd(
+            int quantity, int[] inputArray, int[] expectedArray)
+        {
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+
+            actualList.RemoveRange(quantity);
+
+            CollectionAssert.AreEqual(expectedList, actualList);
         }
 
         [Test]

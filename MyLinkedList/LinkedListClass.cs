@@ -322,7 +322,8 @@ namespace MyLinkedList
             {
                 Node<T> current = _head;
                 Node<T> item = default;
-                int indexLasrDeletItem = index + quantity;
+                int indexLastDeletItem = index + quantity;
+
                 if (index == 0)
                 {
                     for (int i = 0; i < quantity; i++)
@@ -339,17 +340,14 @@ namespace MyLinkedList
                         if (i == index)
                         {
                             item = current;
-
                         }
-                        else if (i == indexLasrDeletItem)
+                        else if (i == indexLastDeletItem)
                         {
                             item.Next = current.Next;
                             current = item;
                         }
 
                         current = current.Next;
-
-
                     }
                 }
 
@@ -359,12 +357,21 @@ namespace MyLinkedList
 
         public void RemoveRangeStart(int quantity)
         {
-            RemoveRangeByIndex(index: 0, quantity);
+            RemoveRangeByIndex(index: 0, quantity: quantity);
         }
 
-        public void RemoveRange()
+        public void RemoveRange(int quantity)
         {
-            throw new NotImplementedException();
+            Node<T> current = _head;
+
+            Count = (quantity < Count) ? Count - quantity : 0;
+
+            for (int i = 0; i < Count - 1; i++)
+            {
+                current = current.Next;
+            }
+
+            current.Next = null;
         }
 
         public int RemoveByValueFirst(T data)
@@ -394,16 +401,17 @@ namespace MyLinkedList
 
             for (int i = 0; i < Count; i++)
             {
-                if(current.Data.CompareTo(data) == 0)
+                if (current.Data.CompareTo(data) == 0)
                 {
                     RemoveByIndex(i);
                     ++counter;
                     --i;
-                    --Count;
                 }
 
                 current = current.Next;
             }
+
+            Count -= counter;
 
             return counter;
         }
@@ -500,7 +508,7 @@ namespace MyLinkedList
             {
                 Node<T> current = _head;
                 T dataMin = _head.Data;
-                
+
                 for (int i = 1; i < Count; i++)
                 {
                     if (dataMin.CompareTo(current.Next.Data) == 1)
@@ -527,7 +535,7 @@ namespace MyLinkedList
             {
                 Node<T> current = _head;
                 Node<T> previos = null;
-                Node<T> next = null;
+                Node<T> next;
 
                 do
                 {
@@ -537,9 +545,9 @@ namespace MyLinkedList
                     current = next;
                 }
                 while (!(current is null));
+
                 _head = previos;
             }
-
         }
 
         public void HalfReverse()
