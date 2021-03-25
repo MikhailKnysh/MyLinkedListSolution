@@ -107,14 +107,24 @@ namespace MyLinkedList
 
         public void Clear()
         {
-             Count = 0;
+            Count = 0;
             _head = null;
             _tail = null;
         }
 
         public T[] ToArray()
         {
-            throw new NotImplementedException();
+            T[] array = new T[Count];
+            if (!(_head is null))
+            {
+                Node<T> current = _head;
+                for (int i = 0; i < Count; i++)
+                {
+                    array[i] = current.Data;
+                    current = current.Next;
+                }
+            }
+            return array;
         }
 
         public void AddStart(T data)
@@ -147,7 +157,7 @@ namespace MyLinkedList
                         {
                             item.Next = current.Next;
                             current.Next = item;
-                            
+
                             if (current.Next == null)
                             {
                                 _tail = current.Next;
@@ -177,8 +187,8 @@ namespace MyLinkedList
 
         public void AddRangeByIndex(int index, T[] collection)
         {
-            
-            if (index>=0 && index<=Count && !(collection is null) )
+
+            if (index >= 0 && index <= Count && !(collection is null))
             {
                 var temp = default(Node<T>);
                 Node<T> current = _head;
@@ -213,7 +223,7 @@ namespace MyLinkedList
                         {
                             if (i == index)
                             {
-                                 temp = current.Next;
+                                temp = current.Next;
                             }
                             current.Next = current.Next = new Node<T>(collection[j++]);
                         }
@@ -237,7 +247,7 @@ namespace MyLinkedList
 
                 if (index == 0)
                 {
-                   data = RemoveStart();
+                    data = RemoveStart();
                 }
                 else
                 {
@@ -306,14 +316,50 @@ namespace MyLinkedList
             return RemoveByIndex(Count - 1);
         }
 
-        public void RemoveRangeByIndex(int index)
+        public void RemoveRangeByIndex(int index, int quantity)
         {
-            throw new NotImplementedException();
+            if (IsValidIndex(index) && !(_head is null) && quantity <= Count - index)
+            {
+                Node<T> current = _head;
+                Node<T> item = default;
+                int indexLasrDeletItem = index + quantity;
+                if (index == 0)
+                {
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        current = current.Next;
+                    }
+
+                    _head = current;
+                }
+                else
+                {
+                    for (int i = 1; i <= Count; i++)
+                    {
+                        if (i == index)
+                        {
+                            item = current;
+
+                        }
+                        else if (i == indexLasrDeletItem)
+                        {
+                            item.Next = current.Next;
+                            current = item;
+                        }
+
+                        current = current.Next;
+
+
+                    }
+                }
+
+                Count -= quantity;
+            }
         }
 
-        public void RemoveRangeStart()
+        public void RemoveRangeStart(int quantity)
         {
-            throw new NotImplementedException();
+            RemoveRangeByIndex(index: 0, quantity);
         }
 
         public void RemoveRange()
@@ -321,19 +367,62 @@ namespace MyLinkedList
             throw new NotImplementedException();
         }
 
-        public int RemoveByValueFirst(T value)
+        public int RemoveByValueFirst(T data)
         {
-            throw new NotImplementedException();
+            int index = -1;
+            Node<T> current = _head;
+
+            for (int i = 0; i < Count; i++)
+            {
+                if (current.Data.CompareTo(data) == 0)
+                {
+                    RemoveByIndex(i);
+                    index = i;
+                    break;
+                }
+
+                current = current.Next;
+            }
+
+            return index;
         }
 
-        public int RemoveByValueAll(T value)
+        public int RemoveByValueAll(T data)
         {
-            throw new NotImplementedException();
+            int counter = 0;
+            Node<T> current = _head;
+
+            for (int i = 0; i < Count; i++)
+            {
+                if(current.Data.CompareTo(data) == 0)
+                {
+                    RemoveByIndex(i);
+                    ++counter;
+                    --i;
+                    --Count;
+                }
+
+                current = current.Next;
+            }
+
+            return counter;
         }
 
-        public int FindIndexByValue(T value)
+        public int FindIndexByValue(T data)
         {
-            throw new NotImplementedException();
+            int index = -1;
+            Node<T> current = _head;
+
+            for (int i = 0; i < Count; i++)
+            {
+                if (current.Data.CompareTo(data) == 0)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
         }
 
         public int GetMaxIndex()
@@ -385,7 +474,7 @@ namespace MyLinkedList
 
         public int GetMinIndex()
         {
-            if(!(_head is null))
+            if (!(_head is null))
             {
                 Node<T> current = _head;
                 T dataMin = _head.Data;
@@ -411,8 +500,7 @@ namespace MyLinkedList
             {
                 Node<T> current = _head;
                 T dataMin = _head.Data;
-                int index = 0;
-
+                
                 for (int i = 1; i < Count; i++)
                 {
                     if (dataMin.CompareTo(current.Next.Data) == 1)
@@ -435,12 +523,75 @@ namespace MyLinkedList
 
         public void Reverse()
         {
-            throw new NotImplementedException();
+            if (!(_head is null))
+            {
+                Node<T> current = _head;
+                Node<T> previos = null;
+                Node<T> next = null;
+
+                do
+                {
+                    next = current.Next;
+                    current.Next = previos;
+                    previos = current;
+                    current = next;
+                }
+                while (!(current is null));
+                _head = previos;
+            }
+
         }
 
         public void HalfReverse()
         {
-            throw new NotImplementedException();
+            if (!(_head is null))
+            {
+                Node<T> current = _head;
+                Node<T> temp = _head;
+
+                if (Count % 2 == 0)
+                {
+                    int coef = Count / 2;
+
+                    for (int i = 0; i < Count + coef - 1; i++)
+                    {
+                        if (i == coef)
+                        {
+                            _head = current;
+                        }
+                        if (i == Count - 1)
+                        {
+                            current.Next = temp;
+                        }
+
+                        current = current.Next;
+                    }
+                    current.Next = null;
+                }
+                else
+                {
+                    Node<T> item = default;
+                    int coef = (Count + 1) / 2;
+
+                    for (int i = 1; i < Count + coef; i++)
+                    {
+                        if (i == coef)
+                        {
+                            item = current;
+                            _head = current.Next;
+                        }
+                        if (i == Count)
+                        {
+                            current.Next = item;
+                            current.Next.Next = temp;
+                        }
+
+                        current = current.Next;
+                    }
+                    current.Next = null;
+
+                }
+            }
         }
 
         public override string ToString()
