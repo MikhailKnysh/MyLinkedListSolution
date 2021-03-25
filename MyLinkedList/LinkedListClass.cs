@@ -338,12 +338,45 @@ namespace MyLinkedList
 
         public int GetMaxIndex()
         {
-            throw new NotImplementedException();
+            if (!(_head is null))
+            {
+                Node<T> current = _head;
+                T dataMax = _head.Data;
+                int index = 0;
+
+                for (int i = 1; i < Count; i++)
+                {
+                    if (dataMax.CompareTo(current.Next.Data) == -1)
+                    {
+                        index = i;
+                        dataMax = current.Next.Data;
+                    }
+                    current = current.Next;
+                }
+                return index;
+            }
+            throw new InvalidOperationException();
         }
 
         public T GetMax()
         {
-            throw new NotImplementedException();
+            if (!(_head is null))
+            {
+                Node<T> current = _head;
+                T dataMax = _head.Data;
+                int index = 0;
+
+                for (int i = 1; i < Count; i++)
+                {
+                    if (dataMax.CompareTo(current.Next.Data) == -1)
+                    {
+                        dataMax = current.Next.Data;
+                    }
+                    current = current.Next;
+                }
+                return dataMax;
+            }
+            throw new InvalidOperationException();
         }
 
         public int GetMinIndex()
