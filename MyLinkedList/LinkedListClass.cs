@@ -351,9 +351,25 @@ namespace MyLinkedList
             return index;
         }
 
-        public int RemoveByValueAll(T value)
+        public int RemoveByValueAll(T data)
         {
-            throw new NotImplementedException();
+            int counter = 0;
+            Node<T> current = _head;
+
+            for (int i = 0; i < Count; i++)
+            {
+                if(current.Data.CompareTo(data) == 0)
+                {
+                    RemoveByIndex(i);
+                    ++counter;
+                    --i;
+                    --Count;
+                }
+
+                current = current.Next;
+            }
+
+            return counter;
         }
 
         public int FindIndexByValue(T value)
@@ -410,7 +426,7 @@ namespace MyLinkedList
 
         public int GetMinIndex()
         {
-            if(!(_head is null))
+            if (!(_head is null))
             {
                 Node<T> current = _head;
                 T dataMin = _head.Data;
