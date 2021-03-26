@@ -322,7 +322,8 @@ namespace MyLinkedList
             {
                 Node<T> current = _head;
                 Node<T> item = default;
-                int indexLasrDeletItem = index + quantity;
+                int indexLastDeletItem = index + quantity;
+
                 if (index == 0)
                 {
                     for (int i = 0; i < quantity; i++)
@@ -339,17 +340,14 @@ namespace MyLinkedList
                         if (i == index)
                         {
                             item = current;
-
                         }
-                        else if (i == indexLasrDeletItem)
+                        else if (i == indexLastDeletItem)
                         {
                             item.Next = current.Next;
                             current = item;
                         }
 
                         current = current.Next;
-
-
                     }
                 }
 
@@ -367,12 +365,21 @@ namespace MyLinkedList
 
         public void RemoveRangeStart(int quantity)
         {
-            RemoveRangeByIndex(index: 0, quantity);
+            RemoveRangeByIndex(index: 0, quantity: quantity);
         }
 
         public void RemoveRange(int quantity)
         {
-            throw new NotImplementedException();
+            Node<T> current = _head;
+
+            Count = (quantity < Count) ? Count - quantity : 0;
+
+            for (int i = 0; i < Count - 1; i++)
+            {
+                current = current.Next;
+            }
+
+            current.Next = null;
         }
 
         public int RemoveByValueFirst(T data)
@@ -395,25 +402,31 @@ namespace MyLinkedList
             return index;
         }
 
-        public int RemoveByValueAll(T data)
+        public int RemoveAllByValue(T data)
         {
-            int counter = 0;
-            Node<T> current = _head;
-
-            for (int i = 0; i < Count; i++)
+            if (!(data is null))
             {
-                if(current.Data.CompareTo(data) == 0)
+                int counter = 0;
+                Node<T> current = _head;
+
+                for (int i = 0; i < Count; i++)
                 {
-                    RemoveByIndex(i);
-                    ++counter;
-                    --i;
-                    --Count;
+                    if (current.Data.CompareTo(data) == 0)
+                    {
+                        RemoveByIndex(i);
+                        ++counter;
+                        --i;
+                    }
+
+                    current = current.Next;
                 }
 
-                current = current.Next;
+                Count -= counter;
+
+                return counter;
             }
 
-            return counter;
+            throw new NullReferenceException("Null data passed!");
         }
 
         public int FindIndexByValue(T data)
@@ -508,7 +521,7 @@ namespace MyLinkedList
             {
                 Node<T> current = _head;
                 T dataMin = _head.Data;
-                
+
                 for (int i = 1; i < Count; i++)
                 {
                     if (dataMin.CompareTo(current.Next.Data) == 1)
@@ -524,9 +537,22 @@ namespace MyLinkedList
             throw new InvalidOperationException();
         }
 
-        public void Sort(bool isAscending)
+        public void Sort(bool isAscending = true)
         {
-            throw new NotImplementedException();
+            Node<T> sorted = null;
+            Node<T> current = _head;
+            int coefficient = isAscending ? -1 : 1;
+
+            while (current != null)
+            {
+                Node<T> next = current.Next;
+
+                sorted = SortedInsert(current, sorted, coefficient);
+
+                current = next;
+            }
+
+            _head = sorted;
         }
 
         public void Reverse()
@@ -535,7 +561,7 @@ namespace MyLinkedList
             {
                 Node<T> current = _head;
                 Node<T> previos = null;
-                Node<T> next = null;
+                Node<T> next;
 
                 do
                 {
@@ -545,9 +571,9 @@ namespace MyLinkedList
                     current = next;
                 }
                 while (!(current is null));
+
                 _head = previos;
             }
-
         }
 
         public void HalfReverse()
@@ -621,6 +647,30 @@ namespace MyLinkedList
             {
                 return string.Empty;
             }
+        }
+
+        private Node<T> SortedInsert(Node<T> newnode, Node<T> sorted, int coefficient)
+        {
+            if (sorted == null || sorted.Data.CompareTo(newnode.Data) != coefficient)
+            {
+                newnode.Next = sorted;
+                sorted = newnode;
+            }
+            else
+            {
+                Node<T> current = sorted;
+
+                while (current.Next != null
+                        && current.Next.Data.CompareTo(newnode.Data) == coefficient)
+                {
+                    current = current.Next;
+                }
+
+                newnode.Next = current.Next;
+                current.Next = newnode;
+            }
+
+            return sorted;
         }
 
         private bool IsValidIndex(int index)
