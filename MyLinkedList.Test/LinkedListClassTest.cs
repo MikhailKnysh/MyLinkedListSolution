@@ -305,6 +305,27 @@ namespace MyLinkedList.Test
             CollectionAssert.AreEqual(expectedList, actualList);
         }
 
+        [TestCase(-3, 3, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 })]
+        [TestCase(25, 7, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 })]
+        [TestCase(100, 4, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 })]
+        [TestCase(-1, 10, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 })]
+        public  void RemoveRangeByIndex_WhenValidIndexNotPassed_ShouldGenerateIndexOutOfRange(
+           int index, int quantity, int[] inputArray)
+        {
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            Assert.Throws<IndexOutOfRangeException>(() => actualList.RemoveRangeByIndex(index, quantity));
+        }
+
+        [TestCase(0, 3, new int[] { })]
+        public void RemoveRangeByIndex_WhenHeadIsNull_ShouldGenerateNullReferenceException(
+          int index, int quantity, int[] inputArray)
+        {
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            Assert.Throws<NullReferenceException>(() => actualList.RemoveRangeByIndex(index, quantity));
+        }
+
         [TestCase(0, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 })]
         [TestCase(4, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 57, 68, 65, -2, -17 })]
         [TestCase(7, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { 65, -2, -17 })]

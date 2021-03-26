@@ -353,6 +353,14 @@ namespace MyLinkedList
 
                 Count -= quantity;
             }
+            else if (_head is null)
+            {
+                throw new NullReferenceException();
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         public void RemoveRangeStart(int quantity)
