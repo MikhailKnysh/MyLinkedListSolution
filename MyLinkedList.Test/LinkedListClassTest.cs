@@ -463,5 +463,10 @@ namespace MyLinkedList.Test
 
             Assert.AreEqual(expectedString, actualString);
         }
+
+        public override void RemoveRange_WhenValidIndexPassed_ShouldRemoveRangeEnd(int quantity, int[] inputArray, int[] expectedArray)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
