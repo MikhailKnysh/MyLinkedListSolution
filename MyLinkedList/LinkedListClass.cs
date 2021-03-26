@@ -115,15 +115,18 @@ namespace MyLinkedList
         public T[] ToArray()
         {
             T[] array = new T[Count];
+
             if (!(_head is null))
             {
                 Node<T> current = _head;
+
                 for (int i = 0; i < Count; i++)
                 {
                     array[i] = current.Data;
                     current = current.Next;
                 }
             }
+
             return array;
         }
 
@@ -142,6 +145,7 @@ namespace MyLinkedList
             if (data != null && index >= 0 && index <= Count)
             {
                 Node<T> item = new Node<T>(data);
+
                 if (index == 0)
                 {
                     item.Next = _head;
@@ -163,6 +167,7 @@ namespace MyLinkedList
                                 _tail = current.Next;
                             }
                         }
+
                         current = current.Next;
                     }
                 }
@@ -574,8 +579,10 @@ namespace MyLinkedList
                     }
                     current = current.Next;
                 }
+
                 return index;
             }
+
             throw new InvalidOperationException();
         }
 
@@ -612,7 +619,6 @@ namespace MyLinkedList
                 Node<T> next = current.Next;
 
                 sorted = SortedInsert(current, sorted, coefficient);
-
                 current = next;
             }
 
@@ -649,14 +655,15 @@ namespace MyLinkedList
 
                 if (Count % 2 == 0)
                 {
-                    int coef = Count / 2;
+                    int coefficient = Count / 2;
 
-                    for (int i = 0; i < Count + coef - 1; i++)
+                    for (int i = 0; i < Count + coefficient - 1; i++)
                     {
-                        if (i == coef)
+                        if (i == coefficient)
                         {
                             _head = current;
                         }
+
                         if (i == Count - 1)
                         {
                             current.Next = temp;
@@ -664,6 +671,7 @@ namespace MyLinkedList
 
                         current = current.Next;
                     }
+
                     current.Next = null;
                 }
                 else
@@ -678,6 +686,7 @@ namespace MyLinkedList
                             item = current;
                             _head = current.Next;
                         }
+
                         if (i == Count)
                         {
                             current.Next = item;
@@ -686,8 +695,8 @@ namespace MyLinkedList
 
                         current = current.Next;
                     }
-                    current.Next = null;
 
+                    current.Next = null;
                 }
             }
         }
@@ -751,30 +760,5 @@ namespace MyLinkedList
         {
             return GetEnumerator();
         }
-        //public override bool Equals(object obj)
-        //{
-        //    LinkedListClass<T> list = (LinkedListClass<T>)obj;
-
-        //    if (this.Length != list.Length)
-        //    {
-        //        return false;
-        //    }
-
-        //    Node<T> currentThis = this.Head;
-        //    Node<T> currentList = list.Head;
-
-        //    do
-        //    {
-        //        if (!currentThis.Data.Equals(currentList.Data))
-        //        {
-        //            return false;
-        //        }
-        //        currentList = currentList.Next;
-        //        currentThis = currentThis.Next;
-        //    }
-        //    while (!(currentThis.Next is null));
-
-        //    return true;
-        //}
     }
 }
