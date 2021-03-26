@@ -248,16 +248,25 @@ namespace MyLinkedList.Test
         [TestCase(34, 2, new int[] { -2, 34, 5, 6, -2, 57, 34, 68, 65, -2, -17 }, new int[] { -2, 5, 6, -2, 57, 68, 65, -2, -17 })]
         [TestCase(13, 0, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 })]
         [TestCase(13, 0, new int[] { }, new int[] { })]
-        public override void RemoveByValueAll_WhenValidIndexPassed_ShouldRemoveFirstValue(
+        public override void RemoveAllByValue_WhenValidIndexPassed_ShouldRemoveFirstValue(
             int valueToRemove, int expectedCounter, int[] inputArray, int[] expectedArray)
         {
             LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
             LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
 
-            int actualCounter = actualList.RemoveByValueAll(valueToRemove);
+            int actualCounter = actualList.RemoveAllByValue(valueToRemove);
 
             Assert.AreEqual(expectedCounter, actualCounter);
             CollectionAssert.AreEqual(expectedList, actualList);
+        }
+
+        [TestCase(null, new int[] { })]
+        public override void RemoveAllByValue_WhenValidIndexPassed_ShouldThrowNullReferenceException(
+            int valueToRemove, int[] inputArray)
+        {
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            Assert.Throws<NullReferenceException>(() => actualList.RemoveByIndex(valueToRemove));
         }
 
         [TestCase(-2, 0, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { 34, 5, 6, -2, 57, 68, 65, -2, -17 })]
@@ -317,7 +326,27 @@ namespace MyLinkedList.Test
             Assert.Throws<NullReferenceException>(() => actualList.RemoveRangeByIndex(index, quantity));
         }
 
-        public override void RemoveRangeStart_WhenValidIndexPassed_ShouldRemoveRangeStart(int quantity, int[] inputArray, int[] expectedArray)
+        [TestCase(0, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 })]
+        [TestCase(4, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 57, 68, 65, -2, -17 })]
+        [TestCase(7, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { 65, -2, -17 })]
+        [TestCase(10, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { })]
+        public override void RemoveRangeStart_WhenValidIndexPassed_ShouldRemoveRangeStart(
+            int quantity, int[] inputArray, int[] expectedArray)
+        {
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+
+            actualList.RemoveRangeStart(quantity);
+
+            CollectionAssert.AreEqual(expectedList, actualList);
+        }
+
+        [TestCase(0, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 })]
+        [TestCase(4, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 34, 5, 6, -2, 57 })]
+        [TestCase(7, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { -2, 34, 5 })]
+        [TestCase(10, new int[] { -2, 34, 5, 6, -2, 57, 68, 65, -2, -17 }, new int[] { })]
+        public override void RemoveRange_WhenValidIndexPassed_ShouldRemoveRangeEnd(
+            int quantity, int[] inputArray, int[] expectedArray)
         {
             LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
             LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
@@ -387,14 +416,28 @@ namespace MyLinkedList.Test
             CollectionAssert.AreEqual(expectedList, actualList);
         }
 
-        public override void SortDesc_WhenCollectionIsUnsorted_ShouldSortCollectionInDescendingOrder(int[] inputArray, int[] expectedArray)
+        [TestCase(new int[] { 6, 7, 2, 1, 5, 3, 4, 10, 8, 9 }, new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 })]
+        public override void SortDesc_WhenCollectionIsUnsorted_ShouldSortCollectionInDescendingOrder(
+            int[] inputArray, int[] expectedArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+
+            actualList.Sort(false);
+
+            CollectionAssert.AreEqual(expectedList, actualList);
         }
 
-        public override void Sort_WhenCollectionIsUnsorted_ShouldSortCollectionInAscendingOrder(int[] inpuatArray, int[] expectedArray)
+        [TestCase(new int[] { 6, 7, 2, 1, 5, 3, 4, 10, 8, 9 }, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
+        public override void Sort_WhenCollectionIsUnsorted_ShouldSortCollectionInAscendingOrder(
+           int[] inpuatArray, int[] expectedArray)
         {
-            throw new System.NotImplementedException();
+            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            LinkedListClass<int> actualList = new LinkedListClass<int>(inpuatArray);
+
+            actualList.Sort();
+
+            CollectionAssert.AreEqual(expectedList, actualList);
         }
 
         [TestCase(new int[] { 6, 7, 2, 1, 5, 3, 4, 10, 8, 9 },

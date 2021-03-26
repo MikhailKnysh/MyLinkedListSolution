@@ -466,26 +466,31 @@ namespace MyLinkedList
             return index;
         }
 
-        public int RemoveByValueAll(T data)
+        public int RemoveAllByValue(T data)
         {
-            int counter = 0;
-            Node<T> current = _head;
-
-            for (int i = 0; i < Count; i++)
+            if (!(data is null))
             {
-                if (current.Data.CompareTo(data) == 0)
+                int counter = 0;
+                Node<T> current = _head;
+
+                for (int i = 0; i < Count; i++)
                 {
-                    RemoveByIndex(i);
-                    ++counter;
-                    --i;
+                    if (current.Data.CompareTo(data) == 0)
+                    {
+                        RemoveByIndex(i);
+                        ++counter;
+                        --i;
+                    }
+
+                    current = current.Next;
                 }
 
-                current = current.Next;
+                Count -= counter;
+
+                return counter;
             }
 
-            Count -= counter;
-
-            return counter;
+            throw new NullReferenceException("Null data passed!");
         }
 
         public int FindIndexByValue(T data)
@@ -596,9 +601,22 @@ namespace MyLinkedList
             throw new InvalidOperationException();
         }
 
-        public void Sort(bool isAscending)
+        public void Sort(bool isAscending = true)
         {
-            throw new NotImplementedException();
+            Node<T> sorted = null;
+            Node<T> current = _head;
+            int coefficient = isAscending ? -1 : 1;
+
+            while (current != null)
+            {
+                Node<T> next = current.Next;
+
+                sorted = SortedInsert(current, sorted, coefficient);
+
+                current = next;
+            }
+
+            _head = sorted;
         }
 
         public void Reverse()
@@ -693,6 +711,30 @@ namespace MyLinkedList
             {
                 return string.Empty;
             }
+        }
+
+        private Node<T> SortedInsert(Node<T> newnode, Node<T> sorted, int coefficient)
+        {
+            if (sorted == null || sorted.Data.CompareTo(newnode.Data) != coefficient)
+            {
+                newnode.Next = sorted;
+                sorted = newnode;
+            }
+            else
+            {
+                Node<T> current = sorted;
+
+                while (current.Next != null
+                        && current.Next.Data.CompareTo(newnode.Data) == coefficient)
+                {
+                    current = current.Next;
+                }
+
+                newnode.Next = current.Next;
+                current.Next = newnode;
+            }
+
+            return sorted;
         }
 
         private bool IsValidIndex(int index)
