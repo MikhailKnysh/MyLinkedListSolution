@@ -2,13 +2,13 @@
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MyLinkedList
 {
-    public class LinkedListClass<T> : IList<T>, IEnumerable<T> where T : IComparable
+    public class MyLinkedList<T> : IList<T>, IEnumerable<T> where T : IComparable
     {
         private Node<T> _head;
-
         private Node<T> _tail;
 
         public int Count { get; set; }
@@ -33,20 +33,23 @@ namespace MyLinkedList
             }
             set
             {
-                if (IsValidIndex(index) && !(value is null))
+                if (!(value is null))
                 {
-                    Node<T> current = _head;
-
-                    for (int i = 1; i <= index; i++)
+                    if (IsValidIndex(index))
                     {
-                        current = current.Next;
-                    }
+                        Node<T> current = _head;
 
-                    current.Data = value;
-                }
-                else if (!(IsValidIndex(index)))
-                {
-                    throw new IndexOutOfRangeException("Invalid index");
+                        for (int i = 1; i <= index; i++)
+                        {
+                            current = current.Next;
+                        }
+
+                        current.Data = value;
+                    }
+                    else
+                    {
+                        throw new IndexOutOfRangeException("Invalid index");
+                    }
                 }
                 else
                 {
@@ -55,16 +58,16 @@ namespace MyLinkedList
             }
         }
 
-        public LinkedListClass()
+        public MyLinkedList()
         {
             Count = 0;
             _head = null;
             _tail = null;
         }
 
-        public LinkedListClass(T data)
+        public MyLinkedList(T data)
         {
-            if (data != null)
+            if (!(data is null))
             {
                 Count = 1;
                 _head = new Node<T>(data);
@@ -76,20 +79,20 @@ namespace MyLinkedList
             }
         }
 
-        public LinkedListClass(T[] data)
+        public MyLinkedList(IEnumerable<T> data)
         {
             if (!(data is null))
             {
-                Count = data.Length;
+                Count = data.Count();
 
-                if (data.Length != 0)
+                if (data.Count() != 0)
                 {
-                    _head = new Node<T>(data[0]);
+                    _head = new Node<T>(data.First());
                     _tail = _head;
 
-                    for (int i = 1; i < data.Length; i++)
+                    for (int i = 1; i < data.Count(); i++)
                     {
-                        _tail.Next = new Node<T>(data[i]);
+                        _tail.Next = new Node<T>(data.ElementAt(i));
                         _tail = _tail.Next;
                     }
                 }
@@ -115,15 +118,24 @@ namespace MyLinkedList
         public T[] ToArray()
         {
             T[] array = new T[Count];
+
             if (!(_head is null))
             {
-                Node<T> current = _head;
-                for (int i = 0; i < Count; i++)
+                int i = 0;
+                array[i++] = _head.Data;
+                //Node<T> current = _head;
+
+                foreach (var item in this)
                 {
-                    array[i] = current.Data;
-                    current = current.Next;
+                    array[i++] = item;
                 }
+                //for (int i = 0; i < Count; i++)
+                //{
+                //    array[i] = current.Data;
+                //    current = current.Next;
+                //}
             }
+
             return array;
         }
 
@@ -142,12 +154,8 @@ namespace MyLinkedList
             if (data != null && index >= 0 && index <= Count)
             {
                 Node<T> item = new Node<T>(data);
-                if (index == 0)
-                {
-                    item.Next = _head;
-                    _head = item;
-                }
-                else
+
+                if (index != 0)
                 {
                     Node<T> current = _head;
 
@@ -166,6 +174,11 @@ namespace MyLinkedList
                         current = current.Next;
                     }
                 }
+                else
+                {
+                    item.Next = _head;
+                    _head = item;
+                }
 
                 ++Count;
             }
@@ -180,7 +193,7 @@ namespace MyLinkedList
             AddRangeByIndex(index: 0, collection);
         }
 
-        public void AddRangeStart(LinkedListClass<T> collection)
+        public void AddRangeStart(MyLinkedList<T> collection)
         {
             AddRangeByIndex(index: 0, collection);
         }
@@ -190,39 +203,19 @@ namespace MyLinkedList
             AddRangeByIndex(index: Count, collection);
         }
 
-        public void AddRange(LinkedListClass<T> collection)
+        public void AddRange(MyLinkedList<T> collection)
         {
             AddRangeByIndex(index: Count, collection);
         }
 
         public void AddRangeByIndex(int index, T[] collection)
         {
-
             if (index >= 0 && index <= Count && !(collection is null))
             {
                 var temp = default(Node<T>);
                 Node<T> current = _head;
 
-                if (index == 0)
-                {
-                    temp = _head;
-                    _head = new Node<T>(collection[0]);
-                    current = _head;
-
-                    for (int i = 1; i < collection.Length; i++)
-                    {
-                        current.Next = new Node<T>(collection[i]);
-                        current = current.Next;
-                    }
-
-                    current.Next = temp;
-
-                    if (current.Next == null)
-                    {
-                        _tail = current;
-                    }
-                }
-                else
+                if (index != 0)
                 {
                     int j = 0;
                     int lenth = index + collection.Length;
@@ -241,29 +234,13 @@ namespace MyLinkedList
                     }
                     current.Next = temp;
                 }
-                Count += collection.Length;
-            }
-            else
-            {
-                throw new IndexOutOfRangeException();
-            }
-        }
-
-        public void AddRangeByIndex(int index, LinkedListClass<T> collection)
-        {
-
-            if (index >= 0 && index <= Count && !(collection is null))
-            {
-                var temp = default(Node<T>);
-                Node<T> current = _head;
-
-                if (index == 0)
+                else
                 {
                     temp = _head;
                     _head = new Node<T>(collection[0]);
                     current = _head;
 
-                    for (int i = 1; i < collection.Count; i++)
+                    for (int i = 1; i < collection.Length; i++)
                     {
                         current.Next = new Node<T>(collection[i]);
                         current = current.Next;
@@ -276,7 +253,23 @@ namespace MyLinkedList
                         _tail = current;
                     }
                 }
-                else
+
+                Count += collection.Length;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
+
+        public void AddRangeByIndex(int index, MyLinkedList<T> collection)
+        {
+            if (index >= 0 && index <= Count && !(collection is null))
+            {
+                var temp = default(Node<T>);
+                Node<T> current = _head;
+
+                if (index != 0)
                 {
                     int j = 0;
                     int lenth = index + collection.Count;
@@ -294,6 +287,25 @@ namespace MyLinkedList
                         current = current.Next;
                     }
                     current.Next = temp;
+                }
+                else
+                {
+                    temp = _head;
+                    _head = new Node<T>(collection[0]);
+                    current = _head;
+
+                    for (int i = 1; i < collection.Count; i++)
+                    {
+                        current.Next = new Node<T>(collection[i]);
+                        current = current.Next;
+                    }
+
+                    current.Next = temp;
+
+                    if (current.Next == null)
+                    {
+                        _tail = current;
+                    }
                 }
                 Count += collection.Count;
             }
@@ -483,8 +495,6 @@ namespace MyLinkedList
                 current = current.Next;
             }
 
-            Count -= counter;
-
             return counter;
         }
 
@@ -628,17 +638,17 @@ namespace MyLinkedList
             {
                 Node<T> current = _head;
                 Node<T> temp = _head;
+                int coefficient = (Count + Count % 2) / 2;
 
                 if (Count % 2 == 0)
                 {
-                    int coef = Count / 2;
-
-                    for (int i = 0; i < Count + coef - 1; i++)
+                    for (int i = 0; i < Count + coefficient - 1; i++)
                     {
-                        if (i == coef)
+                        if (i == coefficient)
                         {
                             _head = current;
                         }
+
                         if (i == Count - 1)
                         {
                             current.Next = temp;
@@ -646,20 +656,21 @@ namespace MyLinkedList
 
                         current = current.Next;
                     }
+
                     current.Next = null;
                 }
                 else
                 {
                     Node<T> item = default;
-                    int coef = (Count + 1) / 2;
 
-                    for (int i = 1; i < Count + coef; i++)
+                    for (int i = 1; i < Count + coefficient; i++)
                     {
-                        if (i == coef)
+                        if (i == coefficient)
                         {
                             item = current;
                             _head = current.Next;
                         }
+
                         if (i == Count)
                         {
                             current.Next = item;
@@ -668,8 +679,8 @@ namespace MyLinkedList
 
                         current = current.Next;
                     }
-                    current.Next = null;
 
+                    current.Next = null;
                 }
             }
         }
@@ -709,30 +720,5 @@ namespace MyLinkedList
         {
             return GetEnumerator();
         }
-        //public override bool Equals(object obj)
-        //{
-        //    LinkedListClass<T> list = (LinkedListClass<T>)obj;
-
-        //    if (this.Length != list.Length)
-        //    {
-        //        return false;
-        //    }
-
-        //    Node<T> currentThis = this.Head;
-        //    Node<T> currentList = list.Head;
-
-        //    do
-        //    {
-        //        if (!currentThis.Data.Equals(currentList.Data))
-        //        {
-        //            return false;
-        //        }
-        //        currentList = currentList.Next;
-        //        currentThis = currentThis.Next;
-        //    }
-        //    while (!(currentThis.Next is null));
-
-        //    return true;
-        //}
     }
 }

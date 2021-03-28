@@ -10,8 +10,8 @@ namespace MyLinkedList.Test
         public void AddStart_WhenInputValue_ShouldAddItToCollection(
            int valueToInsert, int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             actualList.AddStart(valueToInsert);
 
@@ -22,7 +22,7 @@ namespace MyLinkedList.Test
         [TestCase(25, 10, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })]
         public override void AddByIndex_WhenInpuIsNotValid_ShouldThrowIndexOutOfRangeException(int index, int data, int[] result)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(result);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(result);
 
             Assert.Throws<IndexOutOfRangeException>(() => actualList.AddByIndex(index, data));
         }
@@ -35,8 +35,8 @@ namespace MyLinkedList.Test
         [TestCase(0, 10, new int[] { }, new int[] { 10 })]
         public override void AddByIndex_WhenInputIsValid_ShouldAddItToCollection(int index, int valueToInsert, int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             actualList.AddByIndex(index, valueToInsert);
 
@@ -47,7 +47,7 @@ namespace MyLinkedList.Test
         [TestCase(20, new int[] { 30, 40, 50 }, new int[] { 1, 2, 3, 4, 5, 6 })]
         public override void AddRangeByIndex_WhenInpuISValued_ShouldThrowArgumentException(int index, int[] insertCollection, int[] inputArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             Assert.Throws<IndexOutOfRangeException>(() => actualList.AddRangeByIndex(index, insertCollection));
         }
@@ -60,8 +60,8 @@ namespace MyLinkedList.Test
         public override void AddRangeByIndex_WhenInputIsValued_ShouldAddItToCollection(
            int index, int[] collectionToInsert, int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             actualList.AddRangeByIndex(index, collectionToInsert);
 
@@ -72,8 +72,8 @@ namespace MyLinkedList.Test
         [TestCase(new int[] { 30, 40, 50 }, new int[] { }, new int[] { 30, 40, 50 })]
         public override void AddRangeStart_WhenInputIsValued_ShouldAddItToCollection(int[] collectionToInsert, int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             actualList.AddRangeStart(collectionToInsert);
 
@@ -84,8 +84,8 @@ namespace MyLinkedList.Test
         [TestCase(new int[] { 90, 10, 50 }, new int[] { }, new int[] { 90, 10, 50 })]
         public override void AddRange_WhenInputIsValued_ShouldAddItToCollection(int[] collectionToInsert, int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             actualList.AddRange(collectionToInsert);
 
@@ -97,8 +97,8 @@ namespace MyLinkedList.Test
         [TestCase(10, new int[] { }, new int[] { 10 })]
         public override void Add_WhenInputIsValid_ShouldAddItToCollection(int valueToInsert, int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             actualList.Add(valueToInsert);
 
@@ -109,7 +109,7 @@ namespace MyLinkedList.Test
         public override void FindIndexByValue_WhenValidIndexPassed_ShouldReturnIndex(
             int value, int expectedIndex, int[] inputArray)
         {
-            LinkedListClass<int> list = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> list = new MyLinkedList<int>(inputArray);
             int actualIndex = list.FindIndexByValue(value);
 
             Assert.AreEqual(expectedIndex, actualIndex);
@@ -121,7 +121,7 @@ namespace MyLinkedList.Test
         public override void GetMaxIndex_WhenInputIsValued_ShouldFindIndexMaxElement(
              int expectedIndex, int[] inputArray)
         {
-            LinkedListClass<int> acualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> acualList = new MyLinkedList<int>(inputArray);
 
             int actualIndex = acualList.GetMaxIndex();
 
@@ -132,7 +132,7 @@ namespace MyLinkedList.Test
         public override void GetMaxIndex_WhenInputIsNotValid_ShouldThrowInvalidOperationExeption(
            int[] inputArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             Assert.Throws<InvalidOperationException>(() => actualList.GetMaxIndex());
         }
@@ -143,7 +143,7 @@ namespace MyLinkedList.Test
         public override void GetMax_WhenInputIsValued_ShouldFindMaxElement(
             int expectedMax, int[] inputArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             int actualMax = actualList.GetMax();
 
@@ -154,7 +154,7 @@ namespace MyLinkedList.Test
         public void GetMax_WhenInputIsNotValid_ShouldThrowInvalidOperationExeption(
            int[] inputArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             Assert.Throws<InvalidOperationException>(() => actualList.GetMax());
         }
@@ -165,7 +165,7 @@ namespace MyLinkedList.Test
         public override void GetMinIndex_WhenInputIsValid_ShouldFindIndexMinElement(
        int expectedIndex, int[] inputArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             int actualIndex = actualList.GetMinIndex();
 
@@ -176,7 +176,7 @@ namespace MyLinkedList.Test
         public override void GetMinIndex_WhenInputIsNotValid_ShouldThrowInvalidOperationInvalidOperationExeption(
                   int[] inputArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             Assert.Throws<InvalidOperationException>(() => actualList.GetMinIndex());
         }
@@ -187,7 +187,7 @@ namespace MyLinkedList.Test
         public override void GetMin_WhenInputIsValued_ShouldFindMinElement(
         int expectedMin, int[] inputArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             int actualMin = actualList.GetMin();
 
@@ -198,7 +198,7 @@ namespace MyLinkedList.Test
         public void GetMin_WhenInputIsNotValid_ShouldThrowInvalidOperationInvalidOperationExeption(
                  int[] inputArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             Assert.Throws<InvalidOperationException>(() => actualList.GetMin());
         }
@@ -209,8 +209,8 @@ namespace MyLinkedList.Test
         public override void HalfReverse_WhenValidListPassed_ShouldReverseListByHalves(
             int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
 
             actualList.HalfReverse();
 
@@ -223,7 +223,7 @@ namespace MyLinkedList.Test
         public override void RemoveByIndex_WhenIndexOutOfRange_ShouldThrowIndexOutOfRangeException(
             int index, int[] inputArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             Assert.Throws<IndexOutOfRangeException>(() => actualList.RemoveByIndex(index));
         }
@@ -235,8 +235,8 @@ namespace MyLinkedList.Test
         public override void RemoveByIndex_WhenValidIndexPassed_ShouldDeleteElementByPosition(
             int index, int expectedValueToRemove, int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
 
             int actualValueToRemove = actualList.RemoveByIndex(index);
 
@@ -251,8 +251,8 @@ namespace MyLinkedList.Test
         public override void RemoveByValueAll_WhenValidIndexPassed_ShouldRemoveFirstValue(
             int valueToRemove, int expectedCounter, int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
 
             int actualCounter = actualList.RemoveByValueAll(valueToRemove);
 
@@ -272,8 +272,8 @@ namespace MyLinkedList.Test
         public override void RemoveByValueFirst_WhenValidIndexPassed_ShouldRemoveFirstValue(
             int valueToRemove, int expectedIndex, int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
 
             int actualIndex = actualList.RemoveByValueFirst(valueToRemove);
 
@@ -288,8 +288,8 @@ namespace MyLinkedList.Test
         public override void RemoveRangeByIndex_WhenValidIndexPassed_ShouldRemoveRangeByIndex(
            int index, int quantity, int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
 
             actualList.RemoveRangeByIndex(index, quantity);
 
@@ -303,7 +303,7 @@ namespace MyLinkedList.Test
         public  void RemoveRangeByIndex_WhenValidIndexNotPassed_ShouldGenerateIndexOutOfRange(
            int index, int quantity, int[] inputArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             Assert.Throws<IndexOutOfRangeException>(() => actualList.RemoveRangeByIndex(index, quantity));
         }
@@ -312,15 +312,15 @@ namespace MyLinkedList.Test
         public void RemoveRangeByIndex_WhenHeadIsNull_ShouldGenerateNullReferenceException(
           int index, int quantity, int[] inputArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             Assert.Throws<NullReferenceException>(() => actualList.RemoveRangeByIndex(index, quantity));
         }
 
         public override void RemoveRangeStart_WhenValidIndexPassed_ShouldRemoveRangeStart(int quantity, int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
 
             actualList.RemoveRange(quantity);
 
@@ -330,7 +330,7 @@ namespace MyLinkedList.Test
         [Test]
         public override void RemoveStart_WhenListIsEmpty_ShouldThrowNullReferenceException()
         {
-            LinkedListClass<int> inputList = new LinkedListClass<int>() { };
+            MyLinkedList<int> inputList = new MyLinkedList<int>() { };
 
             Assert.Throws<NullReferenceException>(() => inputList.RemoveStart());
         }
@@ -341,8 +341,8 @@ namespace MyLinkedList.Test
         public override void RemoveStart_WhenListIsValid_ShouldDeleteFirstElement(
             int expectedValueToRemove, int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
 
             int actualValueToRemove = actualList.RemoveStart();
 
@@ -353,7 +353,7 @@ namespace MyLinkedList.Test
         [Test]
         public override void Remove_WhenListIsEmpty_ShouldThrowNullReferenceException()
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>();
+            MyLinkedList<int> actualList = new MyLinkedList<int>();
 
             Assert.Throws<NullReferenceException>(() => actualList.Remove());
         }
@@ -364,8 +364,8 @@ namespace MyLinkedList.Test
         public override void Remove_WhenListIsValid_ShouldDeleteLastElement(
             int expectedValueToRemove, int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
 
             int actualValueToRemove = actualList.Remove();
 
@@ -379,8 +379,8 @@ namespace MyLinkedList.Test
         public override void Reverse_WhenValidListPassed_ShouldReverseList(
            int[] inputArray, int[] expectedArray)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
-            LinkedListClass<int> expectedList = new LinkedListClass<int>(expectedArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
+            MyLinkedList<int> expectedList = new MyLinkedList<int>(expectedArray);
 
             actualList.Reverse();
 
@@ -403,7 +403,7 @@ namespace MyLinkedList.Test
         public void ToArray_WhenCollectionIsValied_ShouldConvertToArray(
           int[] collectionToArray, int[] expectedArray)
         {
-            LinkedListClass<int> listCollection = new LinkedListClass<int>(collectionToArray);
+            MyLinkedList<int> listCollection = new MyLinkedList<int>(collectionToArray);
 
             int[] actualArray = listCollection.ToArray();
 
@@ -414,7 +414,7 @@ namespace MyLinkedList.Test
         public override void ToString_WhenCollectionIsValued_ShouldConvertCollectionToString(
           int[] inputArray, string expectedString)
         {
-            LinkedListClass<int> actualList = new LinkedListClass<int>(inputArray);
+            MyLinkedList<int> actualList = new MyLinkedList<int>(inputArray);
 
             string actualString = actualList.ToString();
 
