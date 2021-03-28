@@ -22,7 +22,7 @@ namespace MyLinkedList
         void RemoveRangeStart(int quantity);
         void RemoveRange(int quantity);
         int RemoveByValueFirst(T value);
-        int RemoveByValueAll(T value);
+        int RemoveAllByValue(T value);
         int FindIndexByValue(T value);
         int GetMaxIndex();
         T GetMax();
